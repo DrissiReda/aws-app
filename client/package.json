@@ -1,6 +1,7 @@
 {
   "name": "aws-app-client",
   "version": "0.1.0",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "react": "^16.2.0",
