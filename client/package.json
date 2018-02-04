@@ -31,9 +31,6 @@
     "ignore": [
       "/build/",
       "/flow-typed/"
-    ],
-    "globals": [
-      "test"
     ]
   }
 }
