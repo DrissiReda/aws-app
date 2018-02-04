@@ -30,6 +30,9 @@
     ],
     "ignore": [
       "/build/"
+    ],
+    "globals": [
+      "test"
     ]
   }
 }
