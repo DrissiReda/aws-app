@@ -8,8 +8,8 @@
     "yarn": "1.3.2"
   },
   "scripts": {
-    "flow": "(cd client && yarn flow); (cd server && yarn flow)",
-    "standard": "(cd client && yarn standard); (cd server && yarn standard)",
+    "flow-all": "(cd client && yarn flow); (cd server && yarn flow)",
+    "standard-all": "(cd client && yarn standard); (cd server && yarn standard)",
     "start": "node server/dist/index.js",
     "postinstall": "yarn install --cwd server --production=false && yarn install --cwd client --production=false",
     "heroku-postbuild": "(cd server && yarn build); (cd client && yarn build)"
