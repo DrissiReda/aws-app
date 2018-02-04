@@ -29,7 +29,8 @@
       "flowtype"
     ],
     "ignore": [
-      "/build/"
+      "/build/",
+      "/flow-typed/"
     ],
     "globals": [
       "test"
