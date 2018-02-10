@@ -31,6 +31,10 @@
     "ignore": [
       "/build/",
       "/flow-typed/"
-    ]
+    ],
+    "rules": {
+      "define-flow-type": 1,
+      "use-flow-type": 1
+    }
   }
 }
