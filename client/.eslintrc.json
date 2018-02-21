@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "react-app",
+    "standard",
+    "standard-react"
+  ],
+  "rules": {
+    "flowtype/require-valid-file-annotation": [
+      2,
+      "always",
+      {
+        "annotationStyle": "line"
+      }
+    ]
+  }
+}

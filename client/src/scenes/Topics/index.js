@@ -1,9 +1,7 @@
 // @flow
 import React from 'react'
-import { Link, Route } from 'react-router-dom'
-// See https://github.com/babel/babel-eslint/issues/553
-// eslint-disable-next-line no-unused-vars
 import type { ContextRouter } from 'react-router-dom'
+import { Link, Route } from 'react-router-dom'
 
 const Topics = ({match}: ContextRouter) => (<div>
   <h2>Topics</h2>

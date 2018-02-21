@@ -7,14 +7,18 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.1"
+    "react-scripts": "^2.0.0-next.47d2d941"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.1",
-    "eslint-plugin-flowtype": "^2.43.0",
-    "flow-bin": "^0.65.0",
-    "source-map-explorer": "^1.5.0",
-    "standard": "^10.0.3"
+    "eslint-config-standard": "^11.0.0",
+    "eslint-config-standard-react": "^6.0.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^6.0.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "flow-bin": "^0.66.0",
+    "source-map-explorer": "^1.5.0"
   },
   "scripts": {
     "analyze": "source-map-explorer build/static/js/main.*",
@@ -22,19 +26,5 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "standard": {
-    "parser": "babel-eslint",
-    "plugins": [
-      "flowtype"
-    ],
-    "ignore": [
-      "/build/",
-      "/flow-typed/"
-    ],
-    "rules": {
-      "define-flow-type": 1,
-      "use-flow-type": 1
-    }
   }
 }
