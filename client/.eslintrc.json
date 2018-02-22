@@ -2,7 +2,8 @@
   "extends": [
     "react-app",
     "standard",
-    "standard-react"
+    "standard-react",
+    "plugin:flowtype/recommended"
   ],
   "rules": {
     "flowtype/require-valid-file-annotation": [
