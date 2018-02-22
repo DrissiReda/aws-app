@@ -1,12 +1,13 @@
 // @flow
 import express from 'express'
+import type { $Request, $Response } from 'express'
 import path from 'path'
 
 const app = express()
 
 app.use(express.static(path.join(__dirname, '..', '..', 'client', 'build')))
 
-app.get('*', (req: express$Request, res: express$Response) => res.sendFile(
+app.get('*', (req: $Request, res: $Response) => res.sendFile(
   path.join(__dirname, '..', '..', 'client', 'build', 'index.html')))
 
 const port = process.env.PORT || 5000
