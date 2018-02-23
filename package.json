@@ -9,7 +9,9 @@
   },
   "scripts": {
     "lint": "(cd client && yarn lint); (cd server && yarn lint)",
+    "flow-stop": "(cd client && yarn flow stop); (cd server && yarn flow stop)",
     "start": "node server/dist/index.js",
+    "build": "(cd client && yarn build); (cd server && yarn build)",
     "postinstall": "yarn install --cwd server --production=false && yarn install --cwd client --production=false",
     "heroku-postbuild": "(cd server && yarn build); (cd client && yarn build)"
   }
