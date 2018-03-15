@@ -8,8 +8,10 @@
     "material-ui-icons": "^1.0.0-beta.35",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-scripts": "^2.0.0-next.47d2d941",
+    "redux": "^3.7.2",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
