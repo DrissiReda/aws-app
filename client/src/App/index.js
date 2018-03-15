@@ -3,7 +3,7 @@ import React, { Fragment } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { closeDrawer, openDrawer } from './actions'
-import Reboot from 'material-ui/Reboot'
+import CssBaseline from 'material-ui/CssBaseline'
 import AppBar from './AppBar/index'
 import Drawer from './Drawer/index'
 import Home from '../scenes/Home/index'
@@ -24,7 +24,7 @@ type Props = {
 }
 
 const App = ({isDrawerOpen, openDrawer, closeDrawer}: Props) => (<Fragment>
-  <Reboot />
+  <CssBaseline />
   <AppBar openDrawer={openDrawer} />
   <Drawer isOpen={isDrawerOpen} close={closeDrawer} />
   <Switch>
