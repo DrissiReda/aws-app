@@ -7,7 +7,7 @@ import { combineReducers, createStore } from 'redux'
 import WebFont from 'webfontloader'
 import registerServiceWorker from './registerServiceWorker'
 import App from './App/index'
-import * as reducers from './App/reducers'
+import * as reducers from './App/Header/reducers'
 import './index.css'
 
 const store = createStore(combineReducers(reducers), window.__REDUX_DEVTOOLS_EXTENSION__ &&
