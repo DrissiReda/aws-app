@@ -27,21 +27,22 @@ type Props = {
     flex: string,
     menuButton: string
   },
-  openDrawer: Function
+  openDrawer: Function,
+  title: string
 }
 
-const AwsAppBar = ({classes, openDrawer}: Props) => (<AppBar className={classes.root}>
-  <Toolbar>
-    <IconButton className={classes.menuButton} aria-label='Menu' color='inherit' onClick={openDrawer}>
-      <MenuIcon />
-    </IconButton>
-    <Typography variant='title' className={classes.flex} color='inherit'>
-      Title
-    </Typography>
-    <IconButton aria-label='User menu' color='inherit'>
-      <AccountCircle />
-    </IconButton>
-  </Toolbar>
-</AppBar>)
-
-export default withStyles(styles)(AwsAppBar)
+export default withStyles(styles)(
+  ({classes, openDrawer, title}: Props) => (<AppBar className={classes.root}>
+    <Toolbar>
+      <IconButton className={classes.menuButton} aria-label='Menu' color='inherit' onClick={openDrawer}>
+        <MenuIcon />
+      </IconButton>
+      <Typography variant='title' className={classes.flex} color='inherit'>
+        {title}
+      </Typography>
+      <IconButton aria-label='User menu' color='inherit'>
+        <AccountCircle />
+      </IconButton>
+    </Toolbar>
+  </AppBar>)
+)
