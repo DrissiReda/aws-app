@@ -5,7 +5,7 @@ import { closeDrawer, openDrawer } from './actions'
 import AppBar from './AppBar/index'
 import Drawer from './Drawer/index'
 
-const mapStateToProps = state => ({isDrawerOpen: state.drawer.isOpen})
+const mapStateToProps = state => ({isDrawerOpen: state.header.drawer.isOpen})
 
 const mapDispatchToProps = dispatch => ({
   openDrawer: () => dispatch(openDrawer()),
