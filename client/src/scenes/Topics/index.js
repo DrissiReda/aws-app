@@ -1,9 +1,13 @@
 // @flow
 import React from 'react'
-import type { ContextRouter } from 'react-router-dom'
 import { Link, Route } from 'react-router-dom'
+import type { Match } from 'react-router-dom'
 
-const Topics = ({match}: ContextRouter) => (<div>
+type Props = {
+  match: Match
+}
+
+const Topics = ({match}: Props) => (<div>
   <h2>Topics</h2>
   <ul>
     <li>
@@ -27,7 +31,7 @@ const Topics = ({match}: ContextRouter) => (<div>
   <Route exact path={match.url} render={() => (<h3>Please select a topic.</h3>)} />
 </div>)
 
-const Topic = ({match}: ContextRouter) => (<div>
+const Topic = ({match}: Props) => (<div>
   <h3>{match.params.topicId}</h3>
 </div>)
 

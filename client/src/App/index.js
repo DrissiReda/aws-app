@@ -7,12 +7,26 @@ import Home from '../scenes/Home/index'
 import About from '../scenes/About/index'
 import Topics from '../scenes/Topics/index'
 
+const HomePage = () => (<Fragment>
+  <Header title='AWS – Home' />
+  <Home />
+</Fragment>)
+
+const AboutPage = () => (<Fragment>
+  <Header title='AWS – About' />
+  <About />
+</Fragment>)
+
+const TopicsPage = (props) => (<Fragment>
+  <Header title='AWS – Topics' />
+  <Topics {...props} />
+</Fragment>)
+
 export default () => (<Fragment>
   <CssBaseline />
-  <Header />
   <Switch>
-    <Route exact path='/' component={Home} />
-    <Route path='/about' component={About} />
-    <Route path='/topics' component={Topics} />
+    <Route exact path='/' render={HomePage} />
+    <Route path='/about' render={AboutPage} />
+    <Route path='/topics' render={TopicsPage} />
   </Switch>
 </Fragment>)

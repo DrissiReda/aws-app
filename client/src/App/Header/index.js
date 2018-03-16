@@ -13,6 +13,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 type Props = {
+  title: string,
   isDrawerOpen: boolean,
   openDrawer: Function,
   closeDrawer: Function
@@ -20,7 +21,7 @@ type Props = {
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   (props: Props) => (<Fragment>
-    <AppBar openDrawer={props.openDrawer} title='TITLE' />
+    <AppBar openDrawer={props.openDrawer} title={props.title} />
     <Drawer isOpen={props.isDrawerOpen} close={props.closeDrawer} />
   </Fragment>)
 )
