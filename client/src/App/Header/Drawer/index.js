@@ -5,6 +5,21 @@ import { withStyles } from 'material-ui/styles'
 import Drawer from 'material-ui/Drawer'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 
+const buttons = [
+  {
+    name: 'Home',
+    to: '/'
+  },
+  {
+    name: 'About',
+    to: '/about'
+  },
+  {
+    name: 'Topics',
+    to: '/topics'
+  }
+]
+
 const styles = {
   list: {
     width: 250
@@ -18,17 +33,13 @@ type Props = {
 }
 
 export default withStyles(styles)(
-  ({classes, isOpen, close}: Props) => (<Drawer open={isOpen} onClose={close}>
-    <List className={classes.list}>
-      <ListItem component={Link} to='/' button onClick={close}>
-        <ListItemText primary='Home' />
-      </ListItem>
-      <ListItem component={Link} to='/about' button onClick={close}>
-        <ListItemText primary='About' />
-      </ListItem>
-      <ListItem component={Link} to='/topics' button onClick={close}>
-        <ListItemText primary='Topics' />
-      </ListItem>
+  (props: Props) => (<Drawer open={props.isOpen} onClose={props.close}>
+    <List className={props.classes.list}>
+      {buttons.map(button => (
+        <ListItem key={button.name} component={Link} to={button.to} button onClick={props.close}>
+          <ListItemText primary={button.name} />
+        </ListItem>
+      ))}
     </List>
   </Drawer>)
 )
