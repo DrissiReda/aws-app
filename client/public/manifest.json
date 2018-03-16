@@ -3,9 +3,9 @@
   "name": "Projet Applications web et sécurité",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "favicon.svg",
+      "sizes": "199x199",
+      "type": "image/svg+xml"
     }
   ],
   "start_url": ".",
