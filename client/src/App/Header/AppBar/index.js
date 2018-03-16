@@ -27,20 +27,21 @@ type Props = {
     flex: string,
     menuButton: string
   },
-  openDrawer: Function,
+  toggleDrawer: Function,
+  toggleUserMenu: Function,
   title: string
 }
 
 export default withStyles(styles)(
-  ({classes, openDrawer, title}: Props) => (<AppBar className={classes.root}>
+  (props: Props) => (<AppBar className={props.classes.root}>
     <Toolbar>
-      <IconButton className={classes.menuButton} aria-label='Menu' color='inherit' onClick={openDrawer}>
+      <IconButton className={props.classes.menuButton} aria-label='Menu' color='inherit' onClick={props.toggleDrawer}>
         <MenuIcon />
       </IconButton>
-      <Typography variant='title' className={classes.flex} color='inherit'>
-        {title}
+      <Typography variant='title' className={props.classes.flex} color='inherit'>
+        {props.title}
       </Typography>
-      <IconButton aria-label='User menu' color='inherit'>
+      <IconButton aria-label='User menu' color='inherit' onClick={props.toggleUserMenu}>
         <AccountCircle />
       </IconButton>
     </Toolbar>

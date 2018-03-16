@@ -28,15 +28,15 @@ const styles = {
 
 type Props = {
   classes: { list: string },
-  isOpen: boolean,
-  close: Function
+  open: boolean,
+  handleClose: Function
 }
 
 export default withStyles(styles)(
-  (props: Props) => (<Drawer open={props.isOpen} onClose={props.close}>
+  (props: Props) => (<Drawer open={props.open} onClose={props.handleClose}>
     <List className={props.classes.list}>
       {buttons.map(button => (
-        <ListItem key={button.name} component={Link} to={button.to} button onClick={props.close}>
+        <ListItem key={button.name} component={Link} to={button.to} button onClick={props.handleClose}>
           <ListItemText primary={button.name} />
         </ListItem>
       ))}
