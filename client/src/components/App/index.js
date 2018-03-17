@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import CssBaseline from 'material-ui/CssBaseline'
 import Header from './components/Header/index'
+import SceneWrapper from './components/SceneWrapper/index'
 import Home from './components/Home/index'
 import Settings from './components/Settings/index'
 
@@ -13,7 +14,9 @@ const HomePage = () => (<Fragment>
     <title>AWS – Home</title>
   </Helmet>
   <Header title='AWS – Home' />
-  <Home />
+  <SceneWrapper>
+    <Home />
+  </SceneWrapper>
 </Fragment>)
 
 const SettingsPage = () => (<Fragment>
@@ -21,7 +24,9 @@ const SettingsPage = () => (<Fragment>
     <title>AWS – Settings</title>
   </Helmet>
   <Header title='AWS – Settings' />
-  <Settings />
+  <SceneWrapper>
+    <Settings />
+  </SceneWrapper>
 </Fragment>)
 
 export default () => (<Fragment>

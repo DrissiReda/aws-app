@@ -3,9 +3,7 @@ import React from 'react'
 import { withStyles } from 'material-ui/styles/index'
 
 const styles = {
-  root: {
-    'margin-top': 100
-  }
+  root: {}
 }
 
 type Props = {
