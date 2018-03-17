@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import CssBaseline from 'material-ui/CssBaseline'
 import Header from './components/Header/index'
-import Home from '../Home/index'
+import Home from './scenes/Home/index'
 import About from '../About/index'
 import Topics from '../Topics/index'
 
