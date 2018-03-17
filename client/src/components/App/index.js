@@ -4,8 +4,8 @@ import { Route, Switch } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import CssBaseline from 'material-ui/CssBaseline'
 import Header from './components/Header/index'
-import Home from './scenes/Home/index'
-import About from '../About/index'
+import Home from './components/Home/index'
+import Settings from './components/Settings/index'
 import Topics from '../Topics/index'
 
 // Page title & headerTitle should probably be managed using Redux ?
@@ -17,12 +17,12 @@ const HomePage = () => (<Fragment>
   <Home />
 </Fragment>)
 
-const AboutPage = () => (<Fragment>
+const SettingsPage = () => (<Fragment>
   <Helmet>
-    <title>AWS – About</title>
+    <title>AWS – Settings</title>
   </Helmet>
-  <Header title='AWS – About' />
-  <About />
+  <Header title='AWS – Settings' />
+  <Settings />
 </Fragment>)
 
 const TopicsPage = (props) => (<Fragment>
@@ -37,7 +37,7 @@ export default () => (<Fragment>
   <CssBaseline />
   <Switch>
     <Route exact path='/' render={HomePage} />
-    <Route path='/about' render={AboutPage} />
+    <Route path='/about' render={SettingsPage} />
     <Route path='/topics' render={TopicsPage} />
   </Switch>
 </Fragment>)

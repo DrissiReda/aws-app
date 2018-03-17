@@ -6,8 +6,8 @@ import { Provider } from 'react-redux'
 import { combineReducers, createStore } from 'redux'
 import WebFont from 'webfontloader'
 import registerServiceWorker from './registerServiceWorker'
-import App from './scenes/App/index'
-import * as reducers from './scenes/App/services/reducers'
+import App from './components/App/index'
+import * as reducers from './components/App/services/reducers'
 
 const store = createStore(combineReducers(reducers), window.__REDUX_DEVTOOLS_EXTENSION__ &&
   window.__REDUX_DEVTOOLS_EXTENSION__())
