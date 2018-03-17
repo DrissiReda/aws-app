@@ -6,6 +6,8 @@ import IconButton from 'material-ui/IconButton'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
 import MenuIcon from 'material-ui-icons/Menu'
+import CodeIcon from 'material-ui-icons/Code'
+import Tooltip from 'material-ui//Tooltip'
 
 const styles = {
   root: {
@@ -39,6 +41,12 @@ export default withStyles(styles)(
       <Typography variant='title' className={props.classes.flex} color='inherit'>
         {props.title}
       </Typography>
+      <Tooltip title='View source code'>
+        <IconButton aria-label='Source code' component='a' color='inherit'
+          href='https://github.com/shisty/aws-app'>
+          <CodeIcon />
+        </IconButton>
+      </Tooltip>
     </Toolbar>
   </AppBar>)
 )
