@@ -13,10 +13,6 @@ const buttons = [
   {
     name: 'About',
     to: '/about'
-  },
-  {
-    name: 'Topics',
-    to: '/topics'
   }
 ]
 
