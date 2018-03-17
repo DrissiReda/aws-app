@@ -5,7 +5,6 @@ import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
-import AccountCircle from 'material-ui-icons/AccountCircle'
 import MenuIcon from 'material-ui-icons/Menu'
 
 const styles = {
@@ -28,7 +27,6 @@ type Props = {
     menuButton: string
   },
   toggleDrawer: Function,
-  toggleUserMenu: Function,
   title: string
 }
 
@@ -41,9 +39,6 @@ export default withStyles(styles)(
       <Typography variant='title' className={props.classes.flex} color='inherit'>
         {props.title}
       </Typography>
-      <IconButton aria-label='User menu' color='inherit' onClick={props.toggleUserMenu}>
-        <AccountCircle />
-      </IconButton>
     </Toolbar>
   </AppBar>)
 )
