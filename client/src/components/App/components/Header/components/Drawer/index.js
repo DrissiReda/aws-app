@@ -11,8 +11,8 @@ const buttons = [
     to: '/'
   },
   {
-    name: 'About',
-    to: '/about'
+    name: 'Settings',
+    to: '/settings'
   }
 ]
 

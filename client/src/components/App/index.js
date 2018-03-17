@@ -28,6 +28,6 @@ export default () => (<Fragment>
   <CssBaseline />
   <Switch>
     <Route exact path='/' render={HomePage} />
-    <Route path='/about' render={SettingsPage} />
+    <Route path='/settings' render={SettingsPage} />
   </Switch>
 </Fragment>)
