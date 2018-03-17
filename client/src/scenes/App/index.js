@@ -3,10 +3,10 @@ import React, { Fragment } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import CssBaseline from 'material-ui/CssBaseline'
-import Header from './Header/index'
-import Home from '../scenes/Home/index'
-import About from '../scenes/About/index'
-import Topics from '../scenes/Topics/index'
+import Header from './components/Header/index'
+import Home from '../Home/index'
+import About from '../About/index'
+import Topics from '../Topics/index'
 
 // Page title & headerTitle should probably be managed using Redux ?
 const HomePage = () => (<Fragment>

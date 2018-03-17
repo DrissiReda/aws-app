@@ -1,9 +1,9 @@
 // @flow
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { toggleDrawer } from './actions'
-import AppBar from './AppBar/index'
-import Drawer from './Drawer/index'
+import { toggleDrawer } from './services/actions'
+import AppBar from './components/AppBar/index'
+import Drawer from './components/Drawer/index'
 
 const mapStateToProps = state => ({
   isDrawerOpen: state.header.drawer.isOpen

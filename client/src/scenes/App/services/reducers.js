@@ -1,5 +1,5 @@
 // @flow
 import { combineReducers } from 'redux'
-import * as reducers from './Header/reducers'
+import * as reducers from '../components/Header/services/reducers'
 
 export const header = combineReducers(reducers)
