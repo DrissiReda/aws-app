@@ -20,7 +20,7 @@ const styles = {
     width: '60px',
     height: '60px'
   },
-  postText: {
+  postBody: {
     paddingTop: '10px',
     paddingBottom: '10px',
     paddingLeft: '24px'
@@ -35,7 +35,7 @@ const styles = {
     lineHeight: 'inherit',
     verticalAlign: 'middle'
   },
-  postBody: {
+  postText: {
     overflow: 'hidden',
     textOverflow: 'ellipsis'
   }
@@ -46,10 +46,10 @@ type Props = {
     elevated: string,
     post: string,
     avatar: string,
-    postText: string,
+    postBody: string,
     postTitle: string,
     postTitleSep: string,
-    postBody: string
+    postText: string
   },
   date: string,
   author: string,
@@ -82,14 +82,14 @@ export default withStyles(styles)(class Post extends Component<Props, any> {
       <ListItem divider classes={{root: this.props.classes.post}} onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}>
         <Avatar className={this.props.classes.avatar} alt={this.props.author} src={this.props.avatar} />
-        <ListItemText className={this.props.classes.postText}>
+        <ListItemText className={this.props.classes.postBody}>
           <Fragment>
             <Typography className={this.props.classes.postTitle} variant='display1' gutterBottom>
               {this.props.author}
               <KeyboardArrowRightIcon className={this.props.classes.postTitleSep} />
               {this.props.date}
             </Typography>
-            <div className={this.props.classes.postBody} >
+            <div className={this.props.classes.postText} >
               {this.props.children}
             </div>
           </Fragment>
