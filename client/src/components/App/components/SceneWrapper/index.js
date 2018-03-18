@@ -5,13 +5,13 @@ import { withStyles } from 'material-ui/styles/index'
 
 const styles = {
   wrapper: {
-    'margin-top': '100px',
-    'margin-left': 'auto',
-    'margin-right': 'auto',
-    'width': '93%',
-    'max-width': '800px',
-    'border': '5px solid',
-    'border-color': 'blue'
+    marginTop: '150px',
+    marginBottom: '150px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    width: '93%',
+    maxWidth: '700px',
+    minWidth: '350px'
   }
 }
 
