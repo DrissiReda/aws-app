@@ -5,8 +5,8 @@ import { Helmet } from 'react-helmet'
 import CssBaseline from 'material-ui/CssBaseline'
 import Header from './components/Header/index'
 import SceneWrapper from './components/SceneWrapper/index'
-import Home from './components/Home/index'
-import Settings from './components/Settings/index'
+import Home from './scenes/Home/index'
+import Settings from './scenes/Settings/index'
 
 // Page title & headerTitle should probably be managed using Redux ?
 const HomePage = () => (<Fragment>

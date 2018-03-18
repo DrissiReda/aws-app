@@ -1,4 +1,4 @@
 /build/
 /flow-typed/
 /public/
-/src/registerServiceWorker.js
+/src/services/registerServiceWorker.js
