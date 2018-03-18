@@ -6,71 +6,71 @@ import Post from './components/Post/index'
 const dummyMessages = [
   {
     id: 1,
-    date: '1/2/3',
+    date: '12/12/2012',
     author: {
       id: 1,
       name: 'John Doe',
-      avatarUrl: 'http://via.placeholder.com/150x150/000'
+      avatarUrl: 'https://www.shareicon.net/data/128x128/2016/09/02/824411_man_512x512.png'
     },
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum scelerisque tortor diam. Curabitur at lacus nec erat blandit rhoncus at ut ante. Integer pharetra aliquet velit sed hendrerit. Praesent sit amet accumsan nibh. Aliquam sed.'
   },
   {
     id: 2,
-    date: '1/2/3',
+    date: '12/12/2012',
     author: {
       id: 1,
       name: 'John Doe',
-      avatarUrl: 'http://via.placeholder.com/150x150/000'
+      avatarUrl: 'https://www.shareicon.net/data/128x128/2016/09/02/824411_man_512x512.png'
     },
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum imperdiet dui eu enim mattis sagittis. Donec nullam.'
   },
   {
     id: 3,
-    date: '1/2/3',
+    date: '12/12/2012',
     author: {
       id: 1,
       name: 'John Doe',
-      avatarUrl: 'http://via.placeholder.com/150x150/000'
+      avatarUrl: 'https://www.shareicon.net/data/128x128/2016/09/02/824411_man_512x512.png'
     },
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum imperdiet dui eu enim mattis sagittis. Donec nullam.'
   },
   {
     id: 4,
-    date: '1/2/3',
+    date: '12/12/2012',
     author: {
       id: 2,
       name: 'John Doe',
-      avatarUrl: 'http://via.placeholder.com/150x150/000'
+      avatarUrl: 'https://www.shareicon.net/data/128x128/2016/09/02/824411_man_512x512.png'
     },
     text: 'Lorem ipsum dolor sit posuere.'
   },
   {
     id: 5,
-    date: '1/2/3',
+    date: '12/12/2012',
     author: {
       id: 2,
       name: 'John Doe',
-      avatarUrl: 'http://via.placeholder.com/150x150/000'
+      avatarUrl: 'https://www.shareicon.net/data/128x128/2016/09/02/824411_man_512x512.png'
     },
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum scelerisque tortor diam. Curabitur at lacus nec erat blandit rhoncus at ut ante. Integer pharetra aliquet velit sed hendrerit. Praesent sit amet accumsan nibh. Aliquam sed.'
   },
   {
     id: 6,
-    date: '1/2/3',
+    date: '12/12/2012',
     author: {
       id: 2,
       name: 'John Doe',
-      avatarUrl: 'http://via.placeholder.com/150x150/000'
+      avatarUrl: 'https://www.shareicon.net/data/128x128/2016/09/02/824411_man_512x512.png'
     },
     text: 'Lorem ipsum dolor sit posuere.'
   },
   {
     id: 7,
-    date: '1/2/3',
+    date: '12/12/2012',
     author: {
       id: 3,
       name: 'John Doe',
-      avatarUrl: 'http://via.placeholder.com/150x150/000'
+      avatarUrl: 'https://www.shareicon.net/data/128x128/2016/09/02/824411_man_512x512.png'
     },
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing volutpat.'
   }
