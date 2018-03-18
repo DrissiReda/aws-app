@@ -7,51 +7,82 @@ const dummyMessages = [
   {
     id: 1,
     date: '1/2/3',
-    author: 'AAAAAAA',
-    text: 'srnt ni rsntrs trs trt rst r rst'
+    author: {
+      id: 1,
+      name: 'John Doe',
+      avatarUrl: 'http://via.placeholder.com/150x150/000'
+    },
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum scelerisque tortor diam. Curabitur at lacus nec erat blandit rhoncus at ut ante. Integer pharetra aliquet velit sed hendrerit. Praesent sit amet accumsan nibh. Aliquam sed.'
   },
   {
     id: 2,
     date: '1/2/3',
-    author: 'AAAAAAA',
-    text: 'srnt ni rsntrs trs trt rst r rst'
+    author: {
+      id: 1,
+      name: 'John Doe',
+      avatarUrl: 'http://via.placeholder.com/150x150/000'
+    },
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum imperdiet dui eu enim mattis sagittis. Donec nullam.'
   },
   {
     id: 3,
     date: '1/2/3',
-    author: 'AAAAAAA',
-    text: 'srnt ni rsntrs trs trt rst r rst'
+    author: {
+      id: 1,
+      name: 'John Doe',
+      avatarUrl: 'http://via.placeholder.com/150x150/000'
+    },
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum imperdiet dui eu enim mattis sagittis. Donec nullam.'
   },
   {
     id: 4,
     date: '1/2/3',
-    author: 'AAAAAAA',
-    text: 'srnt ni rsntrs trs trt rst r rst'
+    author: {
+      id: 2,
+      name: 'John Doe',
+      avatarUrl: 'http://via.placeholder.com/150x150/000'
+    },
+    text: 'Lorem ipsum dolor sit posuere.'
   },
   {
     id: 5,
     date: '1/2/3',
-    author: 'AAAAAAA',
-    text: 'srnt ni rsntrs trs trt rst r rst'
+    author: {
+      id: 2,
+      name: 'John Doe',
+      avatarUrl: 'http://via.placeholder.com/150x150/000'
+    },
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum scelerisque tortor diam. Curabitur at lacus nec erat blandit rhoncus at ut ante. Integer pharetra aliquet velit sed hendrerit. Praesent sit amet accumsan nibh. Aliquam sed.'
   },
   {
     id: 6,
     date: '1/2/3',
-    author: 'AAAAAAA',
-    text: 'srnt ni rsntrs trs trt rst r rst'
+    author: {
+      id: 2,
+      name: 'John Doe',
+      avatarUrl: 'http://via.placeholder.com/150x150/000'
+    },
+    text: 'Lorem ipsum dolor sit posuere.'
   },
   {
     id: 7,
     date: '1/2/3',
-    author: 'AAAAAAA',
-    text: 'srnt ni rsntrs trs trt rst r rst'
+    author: {
+      id: 3,
+      name: 'John Doe',
+      avatarUrl: 'http://via.placeholder.com/150x150/000'
+    },
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing volutpat.'
   }
 ]
 
 export default () => (<PostList>
-  {dummyMessages.map(message => (
-    <Post key={message.id} date={message.date} author={message.author}>
-      {message.text}
-    </Post>
-  ))}
+  {dummyMessages.map(message => (<Post key={message.id} date={message.date} author={message.author.name} avatar={message.author.avatarUrl}>
+    {message.text}
+  </Post>))}
 </PostList>)
+
+// add canDelete (boolean) prop to Post to indicate if a trash can button should be rendered
+// add an 'on delete' prop callback to Post
+// Create a LoadMoreButton component
+// Create an EditBox component, only shown when connected (show a 'sign in or sign up to post' button otherwise)
