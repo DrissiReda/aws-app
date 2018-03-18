@@ -14,7 +14,10 @@ const styles = {
     flexGrow: 1
   },
   flex: {
-    flex: 1
+    flex: 1,
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis'
   },
   menuButton: {
     marginLeft: -12,
@@ -42,8 +45,7 @@ export default withStyles(styles)(
         {props.title}
       </Typography>
       <Tooltip title='View source code'>
-        <IconButton aria-label='Source code' component='a' color='inherit'
-          href='https://github.com/shisty/aws-app'>
+        <IconButton aria-label='Source code' component='a' color='inherit' href='https://github.com/shisty/aws-app'>
           <CodeIcon />
         </IconButton>
       </Tooltip>
