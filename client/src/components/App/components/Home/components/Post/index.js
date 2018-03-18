@@ -23,7 +23,7 @@ const styles = {
   postText: {
     paddingTop: '10px',
     paddingBottom: '10px',
-    paddingLeft: '40px'
+    paddingLeft: '24px'
   },
   postTitle: {
     fontSize: '0.9rem',
