@@ -1,14 +1,13 @@
 // @flow
 import type { Node } from 'react'
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { withStyles } from 'material-ui/styles/index'
-import { ListItem, ListItemText } from 'material-ui/List'
+import { ListItem } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import Paper from 'material-ui/Paper'
-import Typography from 'material-ui/Typography'
 import KeyboardArrowRightIcon from 'material-ui-icons/KeyboardArrowRight'
 
-const styles = {
+const styles = theme => ({
   elevated: {
     position: 'relative',
     zIndex: '1'
@@ -21,14 +20,15 @@ const styles = {
     height: '60px'
   },
   postBody: {
-    paddingTop: '10px',
-    paddingBottom: '10px',
-    paddingLeft: '24px'
+    ...theme.typography.subheading,
+    padding: '10px 4px 10px 24px'
   },
   postTitle: {
+    ...theme.typography.display1,
     fontSize: '0.9rem',
     overflow: 'hidden',
-    textOverflow: 'ellipsis'
+    textOverflow: 'ellipsis',
+    marginBottom: '0.35rem'
   },
   postTitleSep: {
     fontSize: 'inherit',
@@ -39,7 +39,7 @@ const styles = {
     overflow: 'hidden',
     textOverflow: 'ellipsis'
   }
-}
+})
 
 type Props = {
   classes: {
@@ -82,18 +82,16 @@ export default withStyles(styles)(class Post extends Component<Props, any> {
       <ListItem divider classes={{root: this.props.classes.post}} onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}>
         <Avatar className={this.props.classes.avatar} alt={this.props.author} src={this.props.avatar} />
-        <ListItemText className={this.props.classes.postBody}>
-          <Fragment>
-            <Typography className={this.props.classes.postTitle} variant='display1' gutterBottom>
-              {this.props.author}
-              <KeyboardArrowRightIcon className={this.props.classes.postTitleSep} />
-              {this.props.date}
-            </Typography>
-            <div className={this.props.classes.postText} >
-              {this.props.children}
-            </div>
-          </Fragment>
-        </ListItemText>
+        <div className={this.props.classes.postBody}>
+          <div className={this.props.classes.postTitle}>
+            {this.props.author}
+            <KeyboardArrowRightIcon className={this.props.classes.postTitleSep} />
+            {this.props.date}
+          </div>
+          <div className={this.props.classes.postText}>
+            {this.props.children}
+          </div>
+        </div>
       </ListItem>
     </Paper>
   }
