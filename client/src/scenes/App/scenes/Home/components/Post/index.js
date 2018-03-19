@@ -57,7 +57,11 @@ type Props = {
   children?: Node
 }
 
-export default withStyles(styles)(class Post extends Component<Props, any> {
+type State = {
+  elevation: number
+}
+
+export default withStyles(styles)(class Post extends Component<Props, State> {
   onMouseOver = () => this.setState({elevation: Post.focusElevation})
   onMouseOut = () => this.setState({elevation: Post.restElevation})
 
