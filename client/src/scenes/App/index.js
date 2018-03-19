@@ -10,54 +10,51 @@ import Settings from './scenes/Settings/index'
 import SignUp from './scenes/SignUp/index'
 import Error from './scenes/404/index'
 
-// Page title & headerTitle should probably be managed using Redux ?
-const HomePage = () => (<Fragment>
-  <Helmet>
-    <title>AWS – Home</title>
-  </Helmet>
-  <Header title='AWS – Home' />
-  <SceneWrapper>
-    <Home />
-  </SceneWrapper>
-</Fragment>)
+// Page title & headerTitle should probably be managed using Redux, to allow child component to modify them?
+const pageContent = {
+  home: {
+    scene: <Home />,
+    pageTitle: 'AWS – Home',
+    headerTitle: 'AWS – Home'
+  },
+  settings: {
+    scene: <Settings />,
+    pageTitle: 'AWS – Settings',
+    headerTitle: 'AWS – Settings'
+  },
+  signUp: {
+    scene: <SignUp />,
+    pageTitle: 'AWS – Sign up',
+    headerTitle: 'AWS – Sign up'
+  },
+  error: {
+    scene: <Error />,
+    pageTitle: 'Error 404 (not found)',
+    headerTitle: 'AWS – 404'
+  }
+}
 
-const SettingsPage = () => (<Fragment>
-  <Helmet>
-    <title>AWS – Settings</title>
-  </Helmet>
-  <Header title='AWS – Settings' />
-  <SceneWrapper>
-    <Settings />
-  </SceneWrapper>
-</Fragment>)
+type Props = {
+  content: typeof pageContent.home
+}
 
-const SignUpPage = () => (<Fragment>
+const Page = (props: Props) => (<Fragment>
   <Helmet>
-    <title>AWS – Sign up</title>
+    <title>{props.content.pageTitle}</title>
   </Helmet>
-  <Header title='AWS – Sign up' />
+  <Header title={props.content.headerTitle} />
   <SceneWrapper>
-    <SignUp />
-  </SceneWrapper>
-</Fragment>)
-
-const ErrorPage = () => (<Fragment>
-  <Helmet>
-    <title>Error 404 (not found)</title>
-  </Helmet>
-  <Header title='AWS – 404' />
-  <SceneWrapper>
-    <Error />
+    {props.content.scene}
   </SceneWrapper>
 </Fragment>)
 
 export default () => (<Fragment>
   <CssBaseline />
   <Switch>
-    <Route exact path='/' render={HomePage} />
-    <Route exact path='/settings' render={SettingsPage} />
-    <Route exact path='/signup' render={SignUpPage} />
-    <Route exact path='/404' render={ErrorPage} />
+    <Route exact path='/' render={() => <Page content={pageContent.home} />} />
+    <Route exact path='/settings' render={() => <Page content={pageContent.settings} />} />
+    <Route exact path='/signup' render={() => <Page content={pageContent.signUp} />} />
+    <Route exact path='/404' render={() => <Page content={pageContent.error} />} />
     <Redirect to='/404' />
   </Switch>
 </Fragment>)
