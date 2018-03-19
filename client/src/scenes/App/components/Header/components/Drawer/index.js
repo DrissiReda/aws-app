@@ -37,7 +37,8 @@ export default withStyles(styles)(
   (props: Props) => (<Drawer open={props.open} onClose={props.handleClose}>
     <List className={props.classes.list}>
       {buttons.map(button => (
-        <ListItem key={button.name} component={Link} to={button.to} button onClick={props.handleClose} divider={button.divider || false}>
+        <ListItem key={button.name} component={Link} to={button.to} button onClick={props.handleClose}
+          divider={button.divider || false}>
           <ListItemText primary={button.name} />
         </ListItem>
       ))}
