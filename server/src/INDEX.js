@@ -1,30 +1,30 @@
 //FIXME redirect buttons to proxy routes in order to add instructions before
 // redirection
 
-var express = require('express'),
-    exphbs = require('express-handlebars'),
-    logger = require('morgan'),
-    cookieParser = require('cookie-parser'),
-    bodyParser = require('body-parser'),
-    methodOverride = require('method-override'),
-    session = require('express-session'),
-    mongoose = require('mongoose'),
-    passport = require('passport');
-var dbconfig=require('./config/db.js');
-var app = express();
+const    express = require('express')
+const    exphbs = require('express-handlebars')
+const    logger = require('morgan')
+const    cookieParser = require('cookie-parser')
+const    bodyParser = require('body-parser')
+const    methodOverride = require('method-override')
+const    session = require('express-session')
+const    mongoose = require('mongoose')
+const    passport = require('passport')
+const    dbconfig=require('./config/db.js')
+const    app = express()
 
 //===============EXPRESS================
 // Configure Express
-app.use(logger('combined'));
+app.use(logger('combined'))
 mongoose.connect('mongodb://' +dbconfig.mongodbUser+':'+dbconfig.mongodbPass+'@'
-  +dbconfig.mongodbHost + ':'+dbconfig.port+'/'+dbconfig.name);
-app.use(cookieParser('doesthisreallymatterdoesthislifereallymatter'));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(methodOverride('X-HTTP-Method-Override'));
-app.use(session({secret: 'doesthisreallymatterdoesthislifereallymatter', saveUninitialized: true, resave: true}));
-app.use(passport.initialize());
-app.use(passport.session());
+  +dbconfig.mongodbHost + ':'+dbconfig.port+'/'+dbconfig.name)
+app.use(cookieParser('doesthisreallymatterdoesthislifereallymatter'))
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+app.use(methodOverride('X-HTTP-Method-Override'))
+app.use(session({secret: 'doesthisreallymatterdoesthislifereallymatter', saveUninitialized: true, resave: true}))
+app.use(passport.initialize())
+app.use(passport.session())
 
 // Session-persisted message middleware
 app.use(function(req, res, next){
