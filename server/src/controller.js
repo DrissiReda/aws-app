@@ -10,8 +10,10 @@ app.listen(5000)
 
 const Users = require('../models/users')
 const Tweets = require('../models/tweets')
-
-mongoose.connect('mongodb://admin:istrator@ds111279.mlab.com:11279/aws-twitter-project', function (err) {
+//modified the name 
+const dbconfig= require('../../config/db.js')
+mongoose.connect('mongodb://' +dbconfig.mongodbUser+':'+dbconfig.mongodbPass+'@'
+  +dbconfig.mongodbHost + ':'+dbconfig.port+'/'+dbconfig.name, function (err) {
   if (err) throw err
 })
 
