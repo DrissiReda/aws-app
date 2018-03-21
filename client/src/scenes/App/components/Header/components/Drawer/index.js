@@ -5,22 +5,6 @@ import { withStyles } from 'material-ui/styles'
 import Drawer from 'material-ui/Drawer'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 
-const buttons = [
-  {
-    name: 'Home',
-    to: '/'
-  },
-  {
-    name: 'Settings',
-    to: '/settings',
-    divider: true
-  },
-  {
-    name: 'Sign up',
-    to: '/signup'
-  }
-]
-
 const styles = {
   list: {
     width: 250
@@ -28,20 +12,32 @@ const styles = {
 }
 
 type Props = {
-  classes: { list: string },
+  classes: {
+    list: string
+  },
   open: boolean,
-  handleClose: Function
+  handleClose: Function,
+  toggleSignIn: Function
 }
 
 export default withStyles(styles)(
   (props: Props) => (<Drawer open={props.open} onClose={props.handleClose}>
     <List className={props.classes.list}>
-      {buttons.map(button => (
-        <ListItem key={button.name} component={Link} to={button.to} button onClick={props.handleClose}
-          divider={button.divider || false}>
-          <ListItemText primary={button.name} />
-        </ListItem>
-      ))}
+      <ListItem component={Link} to='/' remplace button onClick={props.handleClose}>
+        <ListItemText primary='Home' />
+      </ListItem>
+      <ListItem component={Link} to='/settings' remplace={false} button onClick={props.handleClose} divider>
+        <ListItemText primary='Settings' />
+      </ListItem>
+      <ListItem button onClick={() => {
+        props.toggleSignIn()
+        props.handleClose()
+      }}>
+        <ListItemText primary='Sign In' />
+      </ListItem>
+      <ListItem component={Link} to='/signup' button onClick={props.handleClose}>
+        <ListItemText primary='Sign up' />
+      </ListItem>
     </List>
   </Drawer>)
 )
