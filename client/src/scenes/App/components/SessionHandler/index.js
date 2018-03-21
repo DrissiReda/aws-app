@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import SignInDialog from './components/SignInDialog/index'
 import { toggleSignIn } from './services/actions'
 import * as validator from 'email-validator'
+import ProgressDialog from './components/ProgressDialog/index'
 
 const mapStateToProps = state => ({
   isOpen: state.sessionHandler.signInDialog.isOpen
@@ -21,14 +22,23 @@ type Props = {
 type State = {
   email: string,
   password: string,
-  emailHelp: ?string
+  emailHelp: ?string,
+  waiting: boolean
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(class extends Component<Props, State> {
   handleConfirm = () => {
     // send request to server and close if connection accepted
-    // display a <CircularProgress /> while waiting for response?
-    this.props.toggleSignIn(false)
+    // if no response is receive within 5s, set waiting to false because it is preventing all user actions
+    this.setState({
+      waiting: true
+    })
+    setTimeout(() => {
+      this.setState({
+        waiting: false
+      })
+      this.props.toggleSignIn(false)
+    }, 2000)
   }
 
   handleClose = () => {
@@ -59,13 +69,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
     this.state = {
       email: '',
       password: '',
-      emailHelp: null
+      emailHelp: null,
+      waiting: false
     }
   }
 
   render () {
-    return <SignInDialog open={this.props.isOpen} email={this.state.email} password={this.state.password}
-      emailHelp={this.state.emailHelp} handleConfirm={this.handleConfirm} handleClose={this.handleClose}
-      handleEmailChange={this.handleEmailChange} handlePasswordChange={this.handlePasswordChange} />
+    if (this.state.waiting) {
+      return <ProgressDialog />
+    } else {
+      return <SignInDialog open={this.props.isOpen} email={this.state.email} password={this.state.password}
+        emailHelp={this.state.emailHelp} handleConfirm={this.handleConfirm} handleClose={this.handleClose}
+        handleEmailChange={this.handleEmailChange} handlePasswordChange={this.handlePasswordChange} />
+    }
   }
 })
