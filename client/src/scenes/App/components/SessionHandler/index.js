@@ -81,7 +81,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
     } else {
       return <SignInDialog open={this.props.isOpen} email={this.state.email} password={this.state.password}
         emailHelp={this.state.emailHelp} handleConfirm={this.handleConfirm} handleClose={this.handleClose}
-        handleEmailChange={this.handleEmailChange} handlePasswordChange={this.handlePasswordChange} />
+        handleEmailChange={this.handleEmailChange} handlePasswordChange={this.handlePasswordChange}
+        disableSignIn={this.state.emailHelp || this.state.password.length === 0 || this.state.email.length === 0} />
     }
   }
 })

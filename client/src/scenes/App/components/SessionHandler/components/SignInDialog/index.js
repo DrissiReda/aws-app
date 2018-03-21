@@ -40,6 +40,7 @@ type Props = {
     noAccount: string
   },
   open: boolean,
+  disableSignIn: boolean,
   fullScreen: boolean,
   email: string,
   emailHelp: ?string,
@@ -96,7 +97,7 @@ export default withMobileDialog()(withStyles(styles)(class extends Component<Pro
         <Button onClick={this.props.handleClose} color='primary'>
           Cancel
         </Button>
-        <Button onClick={this.props.handleConfirm} color='primary'>
+        <Button onClick={this.props.handleConfirm} disabled={this.props.disableSignIn} color='primary'>
           Sign in
         </Button>
       </DialogActions>
