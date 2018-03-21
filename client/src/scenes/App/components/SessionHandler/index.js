@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import SignInDialog from './components/SignInDialog/index'
 import { toggleSignIn } from './services/actions'
+import * as validator from 'email-validator'
 
 const mapStateToProps = state => ({
   isOpen: state.sessionHandler.signInDialog.isOpen
@@ -20,7 +21,7 @@ type Props = {
 type State = {
   email: string,
   password: string,
-  emailHelp: string
+  emailHelp: ?string
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(class extends Component<Props, State> {
@@ -39,10 +40,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
   }
 
   handleEmailChange = event => {
-    // test for common email errors and update this.state.emailHelp
     this.setState({
       email: event.target.value
     })
+    event.target.value.length === 0 || validator.validate(event.target.value)
+      ? this.setState({emailHelp: null})
+      : this.setState({emailHelp: 'Invalid email'})
   }
 
   handlePasswordChange = event => {
@@ -56,8 +59,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
     this.state = {
       email: '',
       password: '',
-      emailHelp: '',
-      passwordHelp: ''
+      emailHelp: null
     }
   }
 

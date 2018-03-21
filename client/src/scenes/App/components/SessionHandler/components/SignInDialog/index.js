@@ -32,7 +32,7 @@ type Props = {
   open: boolean,
   fullScreen: boolean,
   email: string,
-  emailHelp: string,
+  emailHelp: ?string,
   password: string,
   handleClose: Function,
   handleConfirm: Function,
@@ -73,8 +73,8 @@ export default withMobileDialog()(withStyles(styles)(class extends Component<Pro
           TODO: No account? Sign up here
         </DialogContentText>
         <TextField autoFocus onChange={this.props.handleEmailChange} value={this.props.email}
-          error={Boolean(this.props.emailHelp)} helperText={this.props.emailHelp} margin='dense' label='Email address'
-          type='email' fullWidth />
+          error={Boolean(this.props.emailHelp)} helperText={this.props.emailHelp || ''} margin='dense'
+          label='Email address' type='email' fullWidth />
         <TextField autoFocus onChange={this.props.handlePasswordChange} value={this.props.password} margin='dense'
           label='Password' type={this.state.showPassword ? 'text' : 'password'} fullWidth
           InputProps={{endAdornment: this.passwordAdornment()}} />
