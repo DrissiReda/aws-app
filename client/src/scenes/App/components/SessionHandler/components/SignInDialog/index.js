@@ -87,7 +87,7 @@ export default withMobileDialog()(withStyles(styles)(class extends Component<Pro
           label='Password' type={this.state.showPassword ? 'text' : 'password'} fullWidth
           InputProps={{endAdornment: this.passwordAdornment()}} />
         <DialogContentText className={this.props.classes.forgotPassword}>
-          Recover password
+          Recover password (placeholder)
         </DialogContentText>
         <DialogContentText className={this.props.classes.noAccount}>
           Don't have an account? <Link to='/signup' onClick={this.props.handleClose}>Sign up</Link>
