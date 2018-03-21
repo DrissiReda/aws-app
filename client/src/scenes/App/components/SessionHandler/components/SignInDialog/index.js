@@ -14,10 +14,18 @@ import { InputAdornment } from 'material-ui/Input'
 import IconButton from 'material-ui/IconButton'
 import Visibility from 'material-ui-icons/Visibility'
 import VisibilityOff from 'material-ui-icons/VisibilityOff'
+import { Link } from 'react-router-dom'
 
 const styles = {
   root: {
     minWidth: '300px'
+  },
+  forgotPassword: {
+    fontSize: '0.75rem',
+    textAlign: 'right'
+  },
+  noAccount: {
+    marginTop: '20px'
   }
 }
 
@@ -27,7 +35,9 @@ type State = {
 
 type Props = {
   classes: {
-    root: string
+    root: string,
+    forgotPassword: string,
+    noAccount: string
   },
   open: boolean,
   fullScreen: boolean,
@@ -69,15 +79,15 @@ export default withMobileDialog()(withStyles(styles)(class extends Component<Pro
       onClose={this.props.handleClose} aria-label='Sign in form'>
       <DialogTitle>Sign in</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          TODO: No account? Sign up here
-        </DialogContentText>
         <TextField autoFocus onChange={this.props.handleEmailChange} value={this.props.email}
           error={Boolean(this.props.emailHelp)} helperText={this.props.emailHelp || ''} margin='dense'
           label='Email address' type='email' fullWidth />
         <TextField autoFocus onChange={this.props.handlePasswordChange} value={this.props.password} margin='dense'
           label='Password' type={this.state.showPassword ? 'text' : 'password'} fullWidth
           InputProps={{endAdornment: this.passwordAdornment()}} />
+        <DialogContentText className={this.props.classes.noAccount}>
+          Don't have an account? <Link to='/signup' onClick={this.props.handleClose}>Sign up</Link>
+        </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={this.props.handleClose} color='primary'>
