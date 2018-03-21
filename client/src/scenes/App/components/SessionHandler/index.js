@@ -44,7 +44,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
   handleClose = () => {
     this.setState({
       email: '',
-      password: ''
+      password: '',
+      emailHelp: null
     })
     this.props.toggleSignIn(false)
   }
