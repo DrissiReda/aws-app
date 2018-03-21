@@ -8,6 +8,10 @@ import WebFont from 'webfontloader'
 import registerServiceWorker from './services/registerServiceWorker'
 import App from './scenes/App/index'
 import * as reducers from './scenes/App/services/reducers'
+import axios from 'axios'
+
+axios.defaults.baseURL = 'http://jsonplaceholder.typicode.com'
+axios.defaults.timeout = 5000
 
 const store = createStore(combineReducers(reducers), window.__REDUX_DEVTOOLS_EXTENSION__ &&
   window.__REDUX_DEVTOOLS_EXTENSION__())
