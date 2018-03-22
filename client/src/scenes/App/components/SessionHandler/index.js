@@ -5,6 +5,7 @@ import SignInDialog from './components/SignInDialog/index'
 import { toggleSignIn } from './services/actions'
 import * as validator from 'email-validator'
 import ProgressDialog from './components/ProgressDialog/index'
+import axios from 'axios'
 
 const mapStateToProps = state => ({
   isOpen: state.sessionHandler.signInDialog.isOpen
@@ -28,17 +29,18 @@ type State = {
 
 export default connect(mapStateToProps, mapDispatchToProps)(class extends Component<Props, State> {
   handleConfirm = () => {
-    // send request to server and close if connection accepted
-    // if no response is receive within 5s, set waiting to false because it is preventing all user actions
-    this.setState({
-      waiting: true
+    // this.setState({waiting: true})
+    axios.post('/signin', {
+      email: this.state.email,
+      password: this.state.password
+    }).then((response) => {
+      // this.setState({waiting: false})
+      // this.props.toggleSignIn(false)
+      console.log(response)
+    }).catch((error) => {
+      // this.setState({waiting: false})
+      console.log(error)
     })
-    setTimeout(() => {
-      this.setState({
-        waiting: false
-      })
-      this.props.toggleSignIn(false)
-    }, 2000)
   }
 
   handleClose = () => {
