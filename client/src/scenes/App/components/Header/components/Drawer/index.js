@@ -23,10 +23,10 @@ type Props = {
 export default withStyles(styles)(
   (props: Props) => (<Drawer open={props.open} onClose={props.handleClose}>
     <List className={props.classes.list}>
-      <ListItem component={Link} to='/' remplace button onClick={props.handleClose}>
+      <ListItem component={Link} to='/' button onClick={props.handleClose}>
         <ListItemText primary='Home' />
       </ListItem>
-      <ListItem component={Link} to='/settings' remplace={false} button onClick={props.handleClose} divider>
+      <ListItem component={Link} to='/settings' button onClick={props.handleClose} divider>
         <ListItemText primary='Settings' />
       </ListItem>
       <ListItem button onClick={() => {
