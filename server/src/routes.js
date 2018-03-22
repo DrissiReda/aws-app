@@ -4,9 +4,10 @@ const base32 = require('thirty-two')
 const crypto = require('crypto')
 const mailing = require('nodemailer')
 const sprintf = require('sprintf')
+const jwt     = require('jsonwebtoken')
 //config files   ===============================================================
-const funct = require('../config/functions.js')
-const mail  = require('../config/mail.js')
+const funct = require('../../config/functions.js')
+const mail  = require('../../config/mail.js')
 const Users = require('../models/users')
 const Tweets = require('../models/tweets')
 const transporter = mailing.createTransport({
@@ -21,6 +22,8 @@ const transporter = mailing.createTransport({
   /*
 
   */
+  // our secret that will be in the future in a config file
+  app.set('secret','ourstupidsecret');
   app.get('/api/user', function(req, res) {
       res.json(req.user);
   });
@@ -73,19 +76,45 @@ const transporter = mailing.createTransport({
       });
 
       // process the signin form
-      app.post('/signin', passport.authenticate('local-signin', {
-          failureRedirect: '/signin'
+      app.post('/signin', passport.authenticate('local-signin',
+        function(err, user, next){
+          if(err)
+            return next(err);
+          if(!user){
+            return res.json(401, {message: 'no authorization, get lost!'});
+          }
         }),function(req, res) {
             if(req.user.key) {
               res.session.fixingkey=req.user.key;
                 console.log(" this is totp");
                 res.session.method = 'totp';
-                res.redirect('/totp-input');
             } else {
                 console.log(" this is plain ");
                 res.session.method = 'plain';
-                res.redirect('/');
             }
+            // what is sent to the server
+            var payload={
+              username : user.username,
+              email : user.email,
+              avatar_url:user.avatar_url,
+              key : user.key,
+            };
+            var token=jwt.sign(payload,app.get('secret'),{expiresIn: 86400}); //24 hours
+            res.json(200, {
+                success:true,
+                message: 'token worked !',
+                token : token
+            });
+            /*
+            jwt.verify(token, app.get('secret'), function(err, decoded) {
+			          if (err) {
+				            return res.json({ success: false, message: 'Failed to authenticate token.' });
+			         } else {
+				            // if everything is good,decoded is what you want
+				            console.log(decoded);
+				       }
+}
+            */
           }
       );
 
@@ -294,8 +323,7 @@ const transporter = mailing.createTransport({
         }
       });
       res.redirect('/');
-    }
-  })
+    })
   //=====================================================================================
   //=====================================================================================
   //=====Marin's routes  ================================================================

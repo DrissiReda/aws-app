@@ -2,7 +2,6 @@
 // redirection
 
 const    express = require('express')
-const    exphbs = require('express-handlebars')
 const    logger = require('morgan')
 const    cookieParser = require('cookie-parser')
 const    bodyParser = require('body-parser')
@@ -10,7 +9,7 @@ const    methodOverride = require('method-override')
 const    session = require('express-session')
 const    mongoose = require('mongoose')
 const    passport = require('passport')
-const    dbconfig=require('./config/db.js')
+const    dbconfig=require('../../config/db.js')
 const    app = express()
 
 //===============EXPRESS================
@@ -44,18 +43,13 @@ app.use(function(req, res, next){
 });
 
 // Configuring express to use handlebars templates
-var hbs = exphbs.create({
-    defaultLayout: 'main',
-});
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
 
 //===============PASSPORT===============
 
-require('./server/passport')(passport);
+require('./passport')(passport);
 
 //===============ROUTES===============
-require('./server/routes.js')(app,passport);
+require('./routes.js')(app,passport);
 
 //===============PORT=================
 var port = process.env.PORT || 5000;
