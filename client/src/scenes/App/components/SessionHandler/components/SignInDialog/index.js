@@ -40,10 +40,8 @@ type Props = {
     noAccount: string
   },
   open: boolean,
-  disableSignIn: boolean,
   fullScreen: boolean,
   email: string,
-  emailHelp: ?string,
   password: string,
   handleClose: Function,
   handleConfirm: Function,
@@ -80,8 +78,7 @@ export default withMobileDialog()(withStyles(styles)(class extends Component<Pro
       onClose={this.props.handleClose} aria-label='Sign in form'>
       <DialogTitle>Sign in</DialogTitle>
       <DialogContent>
-        <TextField autoFocus onChange={this.props.handleEmailChange} value={this.props.email}
-          error={Boolean(this.props.emailHelp)} helperText={this.props.emailHelp || ''} margin='dense'
+        <TextField autoFocus onChange={this.props.handleEmailChange} value={this.props.email} margin='dense'
           label='Email address' type='email' fullWidth />
         <TextField onChange={this.props.handlePasswordChange} value={this.props.password} margin='dense'
           label='Password' type={this.state.showPassword ? 'text' : 'password'} fullWidth
@@ -97,7 +94,7 @@ export default withMobileDialog()(withStyles(styles)(class extends Component<Pro
         <Button onClick={this.props.handleClose} color='primary'>
           Cancel
         </Button>
-        <Button onClick={this.props.handleConfirm} disabled={this.props.disableSignIn} color='primary'>
+        <Button onClick={this.props.handleConfirm} color='primary'>
           Sign in
         </Button>
       </DialogActions>
