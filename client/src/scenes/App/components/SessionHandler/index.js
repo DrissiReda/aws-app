@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import SignInDialog from './components/SignInDialog/index'
 import { toggleSignIn } from './services/actions'
 import ProgressDialog from './components/ProgressDialog/index'
-import axios from 'axios'
+import { initSession } from '../../services/sessionHandler'
 
 const mapStateToProps = state => ({
   isOpen: state.sessionHandler.signInDialog.isOpen
@@ -27,24 +27,24 @@ type State = {
 
 export default connect(mapStateToProps, mapDispatchToProps)(class extends Component<Props, State> {
   handleConfirm = () => {
-    // this.setState({waiting: true})
-    axios.post('/signin', {
-      email: this.state.email,
-      password: this.state.password
-    }).then((response) => {
-      // this.setState({waiting: false})
-      // this.props.toggleSignIn(false)
+    const onSuccess = (response) => {
+      this.handleClose()
       console.log(response)
-    }).catch((error) => {
-      // this.setState({waiting: false})
+    }
+    const onError = (error) => {
+      this.setState({waiting: false})
+      // display wrong email or password error
       console.log(error)
-    })
+    }
+    // this.setState({waiting: true})
+    initSession(this.state.email, this.state.password, onSuccess, onError)
   }
 
   handleClose = () => {
     this.setState({
       email: '',
-      password: ''
+      password: '',
+      waiting: false
     })
     this.props.toggleSignIn(false)
   }
