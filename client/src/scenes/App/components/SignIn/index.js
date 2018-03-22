@@ -1,13 +1,12 @@
 // @flow
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import SignInDialog from './components/SignInDialog/index'
+import Dialog from './components/Dialog/index'
 import { toggleSignIn } from './services/actions'
-import ProgressDialog from './components/ProgressDialog/index'
 import { initSession } from '../../services/sessionHandler'
 
 const mapStateToProps = state => ({
-  isOpen: state.sessionHandler.signInDialog.isOpen
+  isOpen: state.signIn.dialog.isOpen
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -36,7 +35,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
       // display wrong email or password error
       console.log(error)
     }
-    // this.setState({waiting: true})
+    this.setState({waiting: true})
     initSession(this.state.email, this.state.password, onSuccess, onError)
   }
 
@@ -71,12 +70,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
   }
 
   render () {
-    if (this.state.waiting) {
-      return <ProgressDialog />
-    } else {
-      return <SignInDialog open={this.props.isOpen} email={this.state.email} password={this.state.password}
-        handleConfirm={this.handleConfirm} handleClose={this.handleClose} handleEmailChange={this.handleEmailChange}
-        handlePasswordChange={this.handlePasswordChange} />
-    }
+    return <Dialog open={this.props.isOpen} waiting={this.state.waiting} email={this.state.email}
+      password={this.state.password} handleConfirm={this.handleConfirm} handleClose={this.handleClose}
+      handleEmailChange={this.handleEmailChange} handlePasswordChange={this.handlePasswordChange} />
   }
 })

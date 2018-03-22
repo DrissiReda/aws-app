@@ -9,7 +9,7 @@ import Home from './scenes/Home/index'
 import Settings from './scenes/Settings/index'
 import SignUp from './scenes/SignUp/index'
 import Error from './scenes/404/index'
-import SessionHandler from './components/SessionHandler/index'
+import SignIn from './components/SignIn/index'
 
 // Page title & headerTitle should probably be managed using Redux, to allow child component to modify them?
 const pageContent = {
@@ -51,7 +51,7 @@ const Page = (props: Props) => (<Fragment>
 
 export default () => (<Fragment>
   <CssBaseline />
-  <SessionHandler />
+  <SignIn />
   <Switch>
     <Route exact path='/' render={() => <Page content={pageContent.home} />} />
     <Route exact path='/settings' render={() => <Page content={pageContent.settings} />} />

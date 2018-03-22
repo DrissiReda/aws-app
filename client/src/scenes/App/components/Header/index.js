@@ -2,7 +2,7 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import { toggleDrawer } from './services/actions'
-import { toggleSignIn } from '../SessionHandler/services/actions'
+import { toggleSignIn } from '../SignIn/services/actions'
 import AppBar from './components/AppBar/index'
 import Drawer from './components/Drawer/index'
 

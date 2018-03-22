@@ -1,7 +1,7 @@
 // @flow
 import { CLOSE_SIGN_IN, OPEN_SIGN_IN, TOGGLE_SIGN_IN } from './constants'
 
-export const signInDialog = (state: Object = {isOpen: false}, action: Object) => {
+export const dialog = (state: Object = {isOpen: false}, action: Object) => {
   switch (action.type) {
     case OPEN_SIGN_IN:
       return {
