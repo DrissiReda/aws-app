@@ -3,6 +3,7 @@ import React from 'react'
 import ItemList from './components/ItemList/index'
 import PostItem from './components/PostItem/index'
 import LoadMoreItem from './components/LoadMoreItem/index'
+import EditBoxItem from './components/EditBoxItem/index'
 
 const dummyMessages = [
   {
@@ -78,6 +79,7 @@ const dummyMessages = [
 ]
 
 export default () => (<ItemList>
+  <EditBoxItem signedIn maxLength={255} onPost={(post) => { console.log(post) }} onSignIn={() => {}} />
   {dummyMessages.map(message => (
     <PostItem key={message.id} date={message.date} author={message.author.name} avatar={message.author.avatarUrl}>
       {message.text}
