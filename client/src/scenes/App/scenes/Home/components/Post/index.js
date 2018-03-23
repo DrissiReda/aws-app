@@ -1,17 +1,13 @@
 // @flow
 import type { Node } from 'react'
-import React, { Component } from 'react'
+import React from 'react'
 import { withStyles } from 'material-ui/styles/index'
 import { ListItem } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
-import Paper from 'material-ui/Paper'
 import KeyboardArrowRightIcon from 'material-ui-icons/KeyboardArrowRight'
+import ElevatedItem from '../ElevatedItem/index'
 
 const styles = theme => ({
-  elevated: {
-    position: 'relative',
-    zIndex: '1'
-  },
   post: {
     alignItems: 'stretch'
   },
@@ -43,7 +39,6 @@ const styles = theme => ({
 
 type Props = {
   classes: {
-    elevated: string,
     post: string,
     avatar: string,
     postBody: string,
@@ -57,46 +52,18 @@ type Props = {
   children?: Node
 }
 
-type State = {
-  elevation: number
-}
-
-export default withStyles(styles)(class Post extends Component<Props, State> {
-  onMouseOver = () => this.setState({elevation: Post.focusElevation})
-  onMouseOut = () => this.setState({elevation: Post.restElevation})
-
-  constructor (props: Props) {
-    super(props)
-    this.state = {
-      elevation: Post.restElevation
-    }
-  }
-
-  static get restElevation () {
-    return 2
-  }
-
-  static get focusElevation () {
-    return 6
-  }
-
-  render () {
-    return <Paper className={this.state.elevation !== Post.restElevation ? this.props.classes.elevated : ''}
-      elevation={this.state.elevation}>
-      <ListItem divider classes={{root: this.props.classes.post}} onMouseOver={this.onMouseOver}
-        onMouseOut={this.onMouseOut}>
-        <Avatar className={this.props.classes.avatar} alt={this.props.author} src={this.props.avatar} />
-        <div className={this.props.classes.postBody}>
-          <div className={this.props.classes.postTitle}>
-            {this.props.author}
-            <KeyboardArrowRightIcon className={this.props.classes.postTitleSep} />
-            {this.props.date}
-          </div>
-          <div className={this.props.classes.postText}>
-            {this.props.children}
-          </div>
-        </div>
-      </ListItem>
-    </Paper>
-  }
-})
+export default withStyles(styles)((props: Props) => <ElevatedItem reactive>
+  <ListItem divider classes={{root: props.classes.post}}>
+    <Avatar className={props.classes.avatar} alt={props.author} src={props.avatar} />
+    <div className={props.classes.postBody}>
+      <div className={props.classes.postTitle}>
+        {props.author}
+        <KeyboardArrowRightIcon className={props.classes.postTitleSep} />
+        {props.date}
+      </div>
+      <div className={props.classes.postText}>
+        {props.children}
+      </div>
+    </div>
+  </ListItem>
+</ElevatedItem>)
