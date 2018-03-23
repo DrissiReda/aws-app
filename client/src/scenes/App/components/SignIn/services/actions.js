@@ -1,5 +1,5 @@
 // @flow
-import { CLOSE_SIGN_IN, OPEN_SIGN_IN, TOGGLE_SIGN_IN } from './constants'
+import { CLOSE_SIGN_IN, OPEN_SIGN_IN, TOGGLE_SIGN_IN } from './reducers'
 
 export const toggleSignIn = (toggle: ?boolean): Object => {
   switch (toggle) {

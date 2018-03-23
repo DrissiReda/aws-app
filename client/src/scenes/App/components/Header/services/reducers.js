@@ -1,5 +1,7 @@
 // @flow
-import { CLOSE_DRAWER, OPEN_DRAWER, TOGGLE_DRAWER } from './constants'
+export const OPEN_DRAWER = 'OPEN_DRAWER'
+export const CLOSE_DRAWER = 'CLOSE_DRAWER'
+export const TOGGLE_DRAWER = 'TOGGLE_DRAWER'
 
 export const drawer = (state: Object = {isOpen: false}, action: Object) => {
   switch (action.type) {

@@ -1,5 +1,5 @@
 // @flow
-import { CLOSE_DRAWER, OPEN_DRAWER, TOGGLE_DRAWER } from './constants'
+import { CLOSE_DRAWER, OPEN_DRAWER, TOGGLE_DRAWER } from './reducers'
 
 export const toggleDrawer = (toggle: ?boolean): Object => {
   switch (toggle) {
