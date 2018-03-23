@@ -3,6 +3,17 @@ import React, { Component } from 'react'
 import { withStyles } from 'material-ui/styles/index'
 import SignInButton from './components/SignInItem'
 import EditBoxItem from './components/EditBoxItem'
+import { toggleSignIn } from '../../../../components/SignIn/services/actions'
+import { connect } from 'react-redux'
+
+const mapStateToProps = state => ({
+  // TODO: change when connection is handled
+  isSignedIn: true
+})
+
+const mapDispatchToProps = dispatch => ({
+  toggleSignIn: (toggle: ?boolean) => dispatch(toggleSignIn(toggle))
+})
 
 const styles = {
   signInButton: {
@@ -23,7 +34,8 @@ const styles = {
 }
 
 type Props = {
-  signedIn: boolean
+  isSignedIn: boolean,
+  toggleSignIn: Function
 }
 
 type State = {
@@ -31,17 +43,24 @@ type State = {
   errorText: ?string
 }
 
-export default withStyles(styles)(class extends Component<Props, State> {
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(class extends Component<Props, State> {
   signInItem = () => <SignInButton handleClick={this.onSignIn} />
 
   editBoxItem = () => <EditBoxItem post={this.state.post} errorText={this.state.errorText} handleChange={this.onChange}
     handlePost={this.onPost} />
 
   onSignIn = () => {
-    // open sign in dialog
+    this.props.toggleSignIn(true)
   }
 
   onPost = () => {
+    // TODO: post request
+    if (this.state.post.length === 0) {
+      this.setState({
+        errorText: 'Error: cannot post empty message'
+      })
+      return
+    }
     console.log(this.state.post)
     this.setState({
       post: '',
@@ -50,15 +69,14 @@ export default withStyles(styles)(class extends Component<Props, State> {
   }
 
   onChange = ({target: {value}}) => {
-    if (value.length < this.constructor.maxPostLength) {
+    if (value.length <= this.constructor.maxPostLength) {
       this.setState({
         post: value,
         errorText: null
       })
-    } else if (value.length === this.constructor.maxPostLength) {
+    } else {
       this.setState({
-        post: value,
-        errorText: this.constructor.lengthError
+        errorText: `Posts are limited to ${this.constructor.maxPostLength} characters`
       })
     }
   }
@@ -75,15 +93,7 @@ export default withStyles(styles)(class extends Component<Props, State> {
     return 255
   }
 
-  static get lengthError () {
-    return 'Posts are limited to 255 characters'
-  }
-
-  static get postError () {
-    return 'Error: message could not be posted'
-  }
-
   render () {
-    return this.props.signedIn ? this.editBoxItem() : this.signInItem()
+    return this.props.isSignedIn ? this.editBoxItem() : this.signInItem()
   }
-})
+}))
