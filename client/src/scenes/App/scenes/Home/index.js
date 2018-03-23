@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import PostList from './components/PostList/index'
+import ItemList from './components/ItemList/index'
 import Post from './components/Post/index'
 
 const dummyMessages = [
@@ -76,11 +76,11 @@ const dummyMessages = [
   }
 ]
 
-export default () => (<PostList>
+export default () => (<ItemList>
   {dummyMessages.map(message => (<Post key={message.id} date={message.date} author={message.author.name} avatar={message.author.avatarUrl}>
     {message.text}
   </Post>))}
-</PostList>)
+</ItemList>)
 
 // add canDelete (boolean) prop to Post to indicate if a trash can button should be rendered
 // add an 'on delete' prop callback to Post
