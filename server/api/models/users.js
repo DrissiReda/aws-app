@@ -1,5 +1,6 @@
 // @flow
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt-nodejs')
 const Schema = mongoose.Schema
 
 const options = '_id username email avatar_url'
@@ -7,11 +8,11 @@ const options = '_id username email avatar_url'
 const userSchema = new Schema(
   {
     _id: {
-      type: Schema.ObjectId
+      type: Schema.Types.ObjectId,
+      required: true
     },
     username: {
       type: String,
-      match: /[a-zA-Z0-9]/,
       required: true
     },
     email: {
@@ -19,19 +20,72 @@ const userSchema = new Schema(
       unique: true,
       required: true
     },
-    password: {
-      type: String,
-      select: false,
-      required: true
-    },
     avatar_url: {
       type: String,
       default: 'https://www.shareicon.net/data/128x128/2016/09/02/824411_man_512x512.png'
+    },
+    key: {
+      type: String,
+      unique: true,
+      default: null
+    },
+    local: {
+      password: {
+        type: String,
+        select: false,
+        default: null
+      }
+    },
+    facebook: {
+      id: {
+        type: String,
+        default: null
+      },
+      token: {
+        type: String,
+        default: null
+      },
+      name: {
+        type: String,
+        default: null
+      }
+    },
+    twitter: {
+      id: {
+        type: String,
+        default: null
+      },
+      token: {
+        type: String,
+        default: null
+      },
+      displayName: {
+        type: String,
+        default: null
+      },
+      username: {
+        type: String,
+        default: null
+      }
+    },
+    google: {
+      id: {
+        type: String,
+        default: null
+      },
+      token: {
+        type: String,
+        default: null
+      },
+      name: {
+        type: String,
+        default: null
+      }
     }
   }
 )
 
-const User = module.exports = mongoose.model('User', userSchema)
+let User = module.exports = mongoose.model('User', userSchema)
 
 // get all users -> probably not useful
 module.exports.getUsers = (callback, limit) => {
@@ -55,12 +109,17 @@ module.exports.addUser = (user, callback) => {
   User.create(user, callback)
 }
 
-// delete user from the DB
-module.exports.deleteUser = (user, callback) => {
-  User.remove({_id: user}, callback)
+// update infos
+module.exports.updateInfos = (callback) => {
+  User.update({}, {multi: true}, callback)
 }
 
-// update username
-module.exports.updateInfos = (update, callback) => {
-  User.findOneAndUpdate({username: update.old_username}, {username: update.new_username}, {multi: false}, callback)
+// generating a hash
+userSchema.methods.generateHash = (password) => {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
+}
+
+// checking if password is valid
+userSchema.methods.validPassword = (password) => {
+  return bcrypt.compareSync(password, this.local.password)
 }
