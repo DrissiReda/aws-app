@@ -1,7 +1,9 @@
 // @flow
 import React from 'react'
-import PostList from './components/PostList/index'
-import Post from './components/Post/index'
+import ItemList from './components/ItemList/index'
+import PostItem from './components/PostItem/index'
+import LoadMoreItem from './components/LoadMoreItem/index'
+import EditBoxItem from './components/NewPostItem/index'
 
 const dummyMessages = [
   {
@@ -76,11 +78,14 @@ const dummyMessages = [
   }
 ]
 
-export default () => (<PostList>
-  {dummyMessages.map(message => (<Post key={message.id} date={message.date} author={message.author.name} avatar={message.author.avatarUrl}>
-    {message.text}
-  </Post>))}
-</PostList>)
+export default () => (<ItemList>
+  <EditBoxItem signedIn maxLength={255} onPost={(post) => { console.log(post) }} onSignIn={() => {}} />
+  {dummyMessages.map(message => (
+    <PostItem key={message.id} date={message.date} author={message.author.name} avatar={message.author.avatarUrl}>
+      {message.text}
+    </PostItem>))}
+  <LoadMoreItem onClick={() => {}} />
+</ItemList>)
 
 // add canDelete (boolean) prop to Post to indicate if a trash can button should be rendered
 // add an 'on delete' prop callback to Post

@@ -1,19 +1,19 @@
 // @flow
-import { CLOSE_DRAWER, OPEN_DRAWER, TOGGLE_DRAWER } from './actions'
+import { CLOSE_SIGN_IN, OPEN_SIGN_IN, TOGGLE_SIGN_IN } from './actions'
 
-export const drawer = (state: Object = {isOpen: false}, action: Object) => {
+export const dialog = (state: Object = {isOpen: false}, action: Object) => {
   switch (action.type) {
-    case OPEN_DRAWER:
+    case OPEN_SIGN_IN:
       return {
         ...state,
         isOpen: true
       }
-    case CLOSE_DRAWER:
+    case CLOSE_SIGN_IN:
       return {
         ...state,
         isOpen: false
       }
-    case TOGGLE_DRAWER:
+    case TOGGLE_SIGN_IN:
       return {
         ...state,
         isOpen: !state.isOpen
