@@ -1,17 +1,32 @@
 // @flow
 const express = require('express')
-const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
-
+const bodyParser = require('body-parser')
+const morgan = require('morgan')
 const app = express()
+
+const tweetRoutes = require('../api/routes/tweets')
+const userRoutes = require('../api/routes/users')
+
+app.use(morgan('dev'))
+app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
-app.listen(5000)
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*') // give access to any client
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', 'GET, POST, DELETE, PATCH')
+    return res.status(200).json({})
+  }
+  next()
+})
 
-const Users = require('../models/users')
-const Tweets = require('../models/tweets')
+const port = process.env.PORT || 5000
+app.listen(port, () => {
+  console.log('Connected to port', port)
+})
 
-mongoose.connect('mongodb://admin:istrator@ds111279.mlab.com:11279/aws-twitter-project', function (err) {
+mongoose.connect('mongodb://admin:istrator@ds111279.mlab.com:11279/aws-twitter-project', (err) => {
   if (err) throw err
 })
 
@@ -21,75 +36,27 @@ db.once('open', () => {
   console.log('connected')
 })
 
+// send request to one of these routes
+app.use('/api/tweets', tweetRoutes)
+app.use('/api/users', userRoutes)
+
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-// send all tweets
-app.get('/api/tweets', (req, res) => {
-  Tweets.getTweets((err, tweets) => {
-    if (err) throw err
-    res.json(tweets)
-  })
+// error if route is not found
+app.use((req, res, next) => {
+  const err = new Error('Not found')
+  err.status = 404
+  next(err)
 })
 
-// send all tweets by an user
-app.get('/api/tweets/:userId', (req, res) => {
-  Tweets.getTweetsByUser(req.params.userId, (err, tweets) => {
-    if (err) throw err
-    res.json(tweets)
-  })
-})
-
-// send all users
-app.get('/api/users', (req, res) => {
-  Users.getUsers((err, users) => {
-    if (err) throw err
-    res.json(users)
-  })
-})
-
-// send user matching the id
-app.get('/api/users/:_id', (req, res) => {
-  Users.getUserById(req.params._id, (err, user) => {
-    if (err) throw err
-    res.json(user)
-  })
-})
-
-// send user info for the name in the url
-app.get('/api/users/find/:username', (req, res) => {
-  Users.getUserByName(req.params.username, (err, user) => {
-    if (err) throw err
-    res.json(user)
-  })
-})
-
-// create new user
-app.post('/api/signup', (req, res) => {
-  let newUser = {
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password
-  }
-  Users.addUser(newUser, (err, user) => {
-    if (err) throw err
-    res.json(user)
-  })
-})
-
-// create a new tweet
-app.post('/api/tweets', (req, res) => {
-  let tweet = req.body
-  Tweets.tweet(tweet, (err, tweet) => {
-    if (err) throw err
-    res.json(tweet)
-  })
-})
-
-app.get('/api/update', (req, res) => {
-  Users.updateInfos((err) => {
-    if (err) throw err
-    res.send('updated')
+// catch errors from everywhere
+app.use((error, req, res) => {
+  res.status(error.status || 500)
+  res.json({
+    error: {
+      message: error.message
+    }
   })
 })

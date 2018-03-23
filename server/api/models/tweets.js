@@ -1,16 +1,20 @@
 // @flow
-let mongoose = require('mongoose')
-let Schema = mongoose.Schema
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-let tweetSchema = new Schema(
+const tweetSchema = new Schema(
   {
+    _id: {
+      type: Schema.Types.ObjectId,
+      required: true
+    },
     content: {
       type: String,
       required: true
     },
     user: {
       type: Schema.ObjectId,
-      ref: 'users',
+      ref: 'User',
       required: true
     },
     date: {
@@ -20,9 +24,9 @@ let tweetSchema = new Schema(
   }
 )
 
-let Tweet = module.exports = mongoose.model('Tweet', tweetSchema)
+const Tweet = module.exports = mongoose.model('Tweet', tweetSchema)
 
-// send all tweets -> probably not useful
+// send all tweets with an optional limit
 module.exports.getTweets = (callback, limit) => {
   Tweet.find({}, callback).limit(limit)
 }
@@ -34,5 +38,10 @@ module.exports.getTweetsByUser = (userId, callback) => {
 
 // new tweet
 module.exports.tweet = (tweet, callback) => {
-  Tweet.create(tweet, callback)
+  Tweet.save(tweet, callback)
+}
+
+// delete tweet
+module.exports.deleteTweet = (tweetId, callback) => {
+  Tweet.remove({_id: tweetId}, callback)
 }

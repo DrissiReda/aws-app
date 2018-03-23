@@ -2,13 +2,16 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const options = '_id username email profile_picture_url'
+const options = '_id username email avatar_url'
 
 const userSchema = new Schema(
   {
+    _id: {
+      type: Schema.ObjectId
+    },
     username: {
       type: String,
-      unique: true,
+      match: /[a-zA-Z0-9]/,
       required: true
     },
     email: {
@@ -18,16 +21,17 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
+      select: false,
       required: true
     },
-    profile_picture_url: {
+    avatar_url: {
       type: String,
       default: 'https://www.shareicon.net/data/128x128/2016/09/02/824411_man_512x512.png'
     }
   }
 )
 
-let User = module.exports = mongoose.model('User', userSchema)
+const User = module.exports = mongoose.model('User', userSchema)
 
 // get all users -> probably not useful
 module.exports.getUsers = (callback, limit) => {
@@ -51,7 +55,12 @@ module.exports.addUser = (user, callback) => {
   User.create(user, callback)
 }
 
-// update infos
-module.exports.updateInfos = (callback) => {
-  User.update({}, {multi: true}, callback)
+// delete user from the DB
+module.exports.deleteUser = (user, callback) => {
+  User.remove({_id: user}, callback)
+}
+
+// update username
+module.exports.updateInfos = (update, callback) => {
+  User.findOneAndUpdate({username: update.old_username}, {username: update.new_username}, {multi: false}, callback)
 }
