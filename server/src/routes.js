@@ -1,15 +1,16 @@
 module.exports = function(app, passport) {
-const strings = require('./strings.json')
+const strings = require('./config/strings.json')
 const base32 = require('thirty-two')
 const crypto = require('crypto')
 const mailing = require('nodemailer')
 const sprintf = require('sprintf')
-const jwt     = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
+
 //config files   ===============================================================
-const funct = require('../../config/functions.js')
-const mail  = require('../../config/mail.js')
-const Users = require('../models/users')
-const Tweets = require('../models/tweets')
+const funct = require('./config/functions.js')
+const mail  = require('./config/mail.js')
+const Users = require('./models/users')
+const Tweets = require('./models/tweets')
 const transporter = mailing.createTransport({
     service : mail.service,
     auth    : {
@@ -19,12 +20,8 @@ const transporter = mailing.createTransport({
 })
 // normal routes ===============================================================
   // show the home page (will also have our signin links)
-  /*
 
-  */
-  // our secret that will be in the future in a config file
-  app.set('secret','ourstupidsecret');
-  app.get('/api/user', function(req, res) {
+  app.get('/', function(req, res) {
       res.json(req.user);
   });
   //pure html pages julien you can render them anyway you want
@@ -49,20 +46,19 @@ const transporter = mailing.createTransport({
       console.log(req.user);
       if(!funct.isTotp(req.user.email))
       {
-        res.session.method='plain';
-        res.user.key=null;
-        res.session.fixingkey=null;
+        req.session.method='plain';
+        req.user.key=null;
+        req.session.fixingkey=null;
         //this only happens if we cancelled and the req key is different from the db key
       }
       res.json(req.user);
   });
   // LOGOUT ==============================
-  /*
   app.get('/logout', function(req, res) {
       req.logout();
       res.redirect('/');
   });
-  */
+
 // =============================================================================
 // AUTHENTICATE (FIRST signin) ==================================================
 // =============================================================================
@@ -75,61 +71,102 @@ const transporter = mailing.createTransport({
           res.render('signin');
       });
 
+		app.post('/api/signin', function(req, res, next){
+          passport.authenticate('local-signin',
+            function(err, user, next){
+              console.log("**posting**")
+              if(err)
+                return next(err);
+                if(!user){
+                  return res.status(401).json({message: 'no authorization, get lost!'});
+                }else {
+                console.log(user)
+                /*if(user.key) {
+                res.session.fixingkey=req.user.key;
+                  console.log(" this is totp");
+                  res.session.method = 'totp';
+              } else {
+                  console.log(" this is plain ");
+                  res.session.method = 'plain';
+              }*/
+              // what is sent to the server
+              var payload={
+                username : user.username,
+                email : user.email,
+                avatar_url:user.avatar_url,
+                key : user.key,
+              };
+              var token=jwt.sign({
+                    email : user.email,
+                    password : user.password
+                  },app.get('secret'),{expiresIn: 86400}); //24 hours
+              res.status(200).json({
+                  success:true,
+                  message: 'successfully authenticated !',
+                  data : payload,
+                  token : token
+              })
+            }
+          })(req, res, next)
+      })
       // process the signin form
-      app.post('/signin', passport.authenticate('local-signin',
-        function(err, user, next){
-          if(err)
-            return next(err);
-          if(!user){
-            return res.json(401, {message: 'no authorization, get lost!'});
-          }
+      app.post('/signin', passport.authenticate('local-signin', {
+          failureRedirect: '/signin'
         }),function(req, res) {
             if(req.user.key) {
-              res.session.fixingkey=req.user.key;
+              req.session.fixingkey=req.user.key;
                 console.log(" this is totp");
-                res.session.method = 'totp';
+                req.session.method = 'totp';
+                res.redirect('/totp-input');
             } else {
                 console.log(" this is plain ");
-                res.session.method = 'plain';
+                req.session.method = 'plain';
+                res.redirect('/');
             }
-            // what is sent to the server
-            var payload={
-              username : user.username,
-              email : user.email,
-              avatar_url:user.avatar_url,
-              key : user.key,
-            };
-            var token=jwt.sign(payload,app.get('secret'),{expiresIn: 86400}); //24 hours
-            res.json(200, {
-                success:true,
-                message: 'token worked !',
-                token : token
-            });
-            /*
-            jwt.verify(token, app.get('secret'), function(err, decoded) {
-			          if (err) {
-				            return res.json({ success: false, message: 'Failed to authenticate token.' });
-			         } else {
-				            // if everything is good,decoded is what you want
-				            console.log(decoded);
-				       }
-}
-            */
           }
       );
 
       // SIGNUP =================================
       // show the signup form
-      /*
-      app.get('/signup', function(req, res) {
-          res.json(req.user);
-      });
-      */
+
       // process the signup form
-      app.post('/signup', passport.authenticate('local-signup', {
-          successRedirect : '/', // redirect to the secure profile section
-          failureRedirect : '/signup' // redirect back to the signup page if there is an error
-      }));
+      app.post('/api/signup', function(req, res, next){
+            passport.authenticate('local-signup',
+              function(err, user, next){
+                if(err)
+                  return next(err);
+                  if(!user){
+                    return res.status(401).json({message: 'no authorization, get lost!'});
+                  }else {
+                  console.log(user)
+                  /*if(user.key) {
+                  res.session.fixingkey=req.user.key;
+                    console.log(" this is totp");
+                    res.session.method = 'totp';
+                } else {
+                    console.log(" this is plain ");
+                    res.session.method = 'plain';
+                }*/
+                // what is sent to the server
+                var payload={
+                  username : user.username,
+                  email : user.email,
+                  avatar_url:user.avatar_url,
+                  key : user.key,
+                };
+                var token=jwt.sign({
+                      email : user.email,
+                      password : user.password
+                    },app.get('secret'),{expiresIn: 86400}); //24 hours
+                res.status(200).json({
+                    success:true,
+                    message: 'successfully authenticated !',
+                    data : payload,
+                    token : token
+                })
+              }
+            })(req, res, next)
+        })
 
   // facebook -------------------------------
 
@@ -146,13 +183,13 @@ const transporter = mailing.createTransport({
           }), function(req, res) {
                 console.log("we're here though");
                 if(req.user.key) {
-                  res.session.fixingkey=req.user.key;
+                  req.session.fixingkey=req.user.key;
                   console.log(" this is totp");
-                  res.session.method = 'totp';
+                  req.session.method = 'totp';
                   res.redirect('/totp-input');
                 } else {
                   console.log(" this is plain ");
-                  res.session.method = 'plain';
+                  req.session.method = 'plain';
                   res.redirect('/');
                 }
             });
@@ -172,13 +209,13 @@ const transporter = mailing.createTransport({
           }), function(req, res) {
                 console.log("we're here though");
                 if(req.user.key) {
-                  res.session.fixingkey=req.user.key;
+                  req.session.fixingkey=req.user.key;
                   console.log(" this is totp");
-                  res.session.method = 'totp';
+                  req.session.method = 'totp';
                   res.redirect('/totp-input');
                 } else {
                   console.log(" this is plain ");
-                  res.session.method = 'plain';
+                  req.session.method = 'plain';
                   res.redirect('/');
                 }
             });
@@ -190,28 +227,52 @@ const transporter = mailing.createTransport({
       app.get('/auth/google', passport.authenticate('google', {scope : ['profile', 'email']}));
 
       // the callback after google has authenticated the user
-      app.get('/auth/google/callback',
-          passport.authenticate('google', {
-              failureRedirect : '/auth/google'
-          }), function(req, res) {
-                console.log("we're here though");
-                if(req.user.key) {
-                  res.session.fixingkey=req.user.key;
-                  console.log(" this is totp");
-                  res.session.method = 'totp';
-                  res.redirect('/totp-input');
-                } else {
-                  console.log(" this is plain ");
-                  res.session.method = 'plain';
-                  res.redirect('/');
+      app.get('/auth/google/callback', function(req, res, next){
+            passport.authenticate('google',function(err, user, next) {
+                  console.log("we're here though");
+                  if(err)
+                    return next(err);
+                    if(!user){
+                      return res.status(401).json({message: 'no authorization, get lost!'});
+                    }else {
+                    console.log(user)
+                  /*
+                  if(user.key) {
+                    req.session.fixingkey=req.user.key;
+                    console.log(" this is totp");
+                    req.session.method = 'totp';
+                    res.redirect('/totp-input');
+                  } else {
+                    console.log(" this is plain ");
+                    req.session.method = 'plain';
+                    res.redirect('/');
+                  }
+                  */
+                  var payload={
+                    username : user.username,
+                    email : user.email,
+                    avatar_url:user.avatar_url,
+                    key : user.key,
+                  };
+                  var token=jwt.sign({
+                        email : user.email,
+                        google : user.google
+                      },app.get('secret'),{expiresIn: 86400}); //24 hours
+                  res.status(200).json({
+                      success:true,
+                      message: 'successfully authenticated !',
+                      data : payload,
+                      token : token
+                  })
                 }
+              })(req, res, next)
             });
      app.get('/totp-setup',
         isLoggedIn,
         ensureTotp,
         function(req, res) {
             var url = null;
-            res.user.key=req.session.fixingkey
+            req.user.key=req.session.fixingkey
             if(req.user.key) {
               //need to remove spaces otherwise some apps don't recognize the QRcodes
                 var qrData = sprintf('otpauth://totp/%s?secret=%s',
@@ -238,7 +299,7 @@ const transporter = mailing.createTransport({
         function(req, res) {
           console.log("totp post");
             if(req.body.totp) {
-                res.session.method = 'totp';
+                req.session.method = 'totp';
                 console.log("Setting to totp");
                 var secret = base32.encode(crypto.randomBytes(16));
                 //Discard equal signs (part of base32,
@@ -251,14 +312,14 @@ const transporter = mailing.createTransport({
                 //we will update the db value after the user successfully verifies the code
                 //that way he will not be locked out of his account if he doesn't finish the setup
                 //process
-                res.user.key = secret;
-                res.session.fixingkey = req.user.key;
+                req.user.key = secret;
+                req.session.fixingkey = req.user.key;
                 console.log("We have set the key to "+req.user.key);
             } else {
-                res.session.method = 'plain';
+                req.session.method = 'plain';
                 console.log("Setting to plain");
-                res.user.key = null;
-                res.session.fixingkey = req.user.key;
+                req.user.key = null;
+                req.session.fixingkey = req.user.key;
             }
             res.redirect('/totp-setup');
         }
@@ -266,9 +327,9 @@ const transporter = mailing.createTransport({
     //totp input routes
     app.get('/totp-input', isLoggedIn, function(req, res) {
         if(!req.session.fixingkey)
-          res.user.key=funct.isTotp(req.user.email);
+          req.user.key=funct.isTotp(req.user.email);
         else {
-          res.user.key=req.session.fixingkey;
+          req.user.key=req.session.fixingkey;
         }
         if(!req.user.key) {
             console.log("Logic error, totp-input requested with no key set");
@@ -282,33 +343,38 @@ const transporter = mailing.createTransport({
         failureRedirect: '/totp-input',
     }), function (req, res) {
         //if the user succeeds for the first time we will set his key value
-        res.user.key=req.session.fixingkey;
+        req.user.key=req.session.fixingkey;
         console.log("notice is "+req.session.disablingtotp);
         if(req.session.disablingtotp){
-            res.user.key=null;
-            res.session.fixingkey=null;
+            req.user.key=null;
+            req.session.fixingkey=null;
             funct.disableTotp(req.user);
-            res.session.notice="Your otp is disabled";
-            res.session.method="plain";
+            req.session.notice="Your otp is disabled";
+            req.session.method="plain";
             res.redirect('/profile');
         }
         else {
           //if this is the first time it's being enabled, make it persistent on the db
           funct.enableTotp(req.user,req.user.key);
-          res.session.success="Your otp is valid !";
+          req.session.success="Your otp is valid !";
           res.redirect('/');
         }
     });
     //disables totp
     app.get('/totp-disable', isLoggedIn, function(req,res){
-        res.session.notice="Please enter the code generated on your app to disable 2FA";
-        res.session.disablingtotp=1;
+        req.session.notice="Please enter the code generated on your app to disable 2FA";
+        req.session.disablingtotp=1;
         console.log("disabling....");
         //needs to verify the code before disabling it
         res.redirect('/totp-input');
     });
     // testing route
   app.get('/test', isLoggedIn, function(req,res){
+     if (req.user.email.indexOf('@')< 1){
+       console.log(req.user.twitter);
+       req.session.error="twitter have no right here";
+       res.redirect('/profile');
+     } else {
       transporter.sendMail({
           from : mail.auth.user,
           to : req.user.email,
@@ -323,7 +389,8 @@ const transporter = mailing.createTransport({
         }
       });
       res.redirect('/');
-    })
+    }
+  })
   //=====================================================================================
   //=====================================================================================
   //=====Marin's routes  ================================================================
@@ -369,17 +436,7 @@ const transporter = mailing.createTransport({
   })
 
   // create new user
-  app.post('/api/signup', (req, res) => {
-    let newUser = {
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password
-    }
-    Users.addUser(newUser, (err, user) => {
-      if (err) throw err
-      res.json(user)
-    })
-  })
+
 
   // create a new tweet
   app.post('/api/tweets', (req, res) => {

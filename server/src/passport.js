@@ -8,10 +8,10 @@ var base32           = require('thirty-two');
 var request          = require('sync-request');
 var gravatar         = require('gravatar');
 // load up the user model
-var User       = require('../models/users');
+var User       = require('./models/users');
 
 // load the auth variables
-var configAuth = require('../../config/auth'); // use this one for testing
+var configAuth = require('./config/auth'); // use this one for testing
 
 module.exports = function(passport) {
 
@@ -52,7 +52,6 @@ module.exports = function(passport) {
                 // if there are any errors, return the error
                 if (err)
                     return done(err);
-
                 // if no user is found, return the message
                 if (!user){
                     req.session.error='No user found';
@@ -66,7 +65,7 @@ module.exports = function(passport) {
 
                 // all is well, return user
                 else {
-                    req.session.success='You are successefully logged in ! '+user.username;
+                    console.log('You are successefully logged in ! '+user.username)
                     return done(null, user);
                 }
             });
@@ -122,29 +121,7 @@ module.exports = function(passport) {
 
                 });
             // if the user is logged in but has no local account...
-            } else if ( !req.user.email ) {
-                // ...presumably they're trying to connect a local account
-                // BUT let's check if the email used to connect a local account is being used by another user
-                User.findOne({ 'email' :  email }, function(err, user) {
-                    if (err)
-                        return done(err);
-                    //someone already has that email
-                    if (user) {
-                        req.session.error='That email is already taken.';
-                        return done(null, false);
-                    } else {
-                        var user = req.user;
-                        user.email = email;
-                        user.local.password = user.generateHash(password);
-                        user.save(function (err) {
-                            if (err)
-                                return done(err);
-
-                            return done(null,user);
-                        });
-                    }
-                });
-            } else {
+          } else {
                 // user is logged in and already has a local account. Ignore signup. (You should log out before trying to create a new account, user!)
                 return done(null, req.user);
             }
@@ -176,7 +153,7 @@ module.exports = function(passport) {
                         if (!user.facebook.token) {
                             user.facebook.token = token;
                             user.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
-                            user.email = ((profile.emails)?profile.emails[0].value:profile.id).toLowerCase();
+                            user.facebook.email = ((profile.emails)?profile.emails[0].value:profile.id).toLowerCase();
 
                             user.save(function(err) {
                                 if (err)
@@ -203,6 +180,7 @@ module.exports = function(passport) {
                         newUser.facebook.name  = newUser.username;
                         console.log(profile);
                         //if no email we need a unique parameter like the id to identify people
+                        newUser.facebook.email = newUser.email;
                         console.log("CREATING FB USER "+newUser.username);
                         req.session.method='plain';
                         newUser.save(function(err) {
@@ -222,6 +200,7 @@ module.exports = function(passport) {
                 user.facebook.id    = profile.id;
                 user.facebook.token = token;
                 user.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName;
+                user.facebook.email = ((profile.emails)?profile.emails[0].value:profile.id).toLowerCase();
                 console.log("LOGGING IN FB USER "+profile.name.givenName);
                 req.session.method=(user.key)?'totp':'plain';
                 user.save(function(err) {
@@ -279,9 +258,10 @@ module.exports = function(passport) {
                     } else {
                         // if there is no user, create them
                         console.log("twitter profile is ");
+                        console.log(profile);
                         var newUser                 = new User();
                         newUser.username            = profile.username;
-                        newUser.email               = profile.emails[0].value;
+                        newUser.email               = profile.emails[0].value
                         newUser.key                 = null;
                         newUser.avatar_url          = profile.photos[0].value;
                         newUser.twitter.id          = profile.id;
@@ -350,6 +330,7 @@ module.exports = function(passport) {
                         if (!user.google.token) {
                             user.google.token = token;
                             user.google.name  = profile.displayName;
+                            user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
                             user.save(function(err) {
                                 if (err)
@@ -364,14 +345,14 @@ module.exports = function(passport) {
                         var newUser          = new User();
                         console.log(profile);
                         newUser.username       = profile.displayName;
-                        newUser.email          = (profile.emails[0].value || '').toLowerCase(); //pull the first email
+                        newUser.email          = (profile.emails[0].value || '').toLowerCase();
                         newUser.key            = null;
                         newUser.avatar_url     = profile._json.image.url;
                         newUser.google.id      = profile.id;
                         newUser.google.token   = token;
                         newUser.google.name    = profile.displayName;
+                        newUser.google.email   = (profile.emails[0].value || '').toLowerCase(); // pull the first email
                         console.log("CREATING GOOGLE USER "+profile.displayName);
-                        //not totp cuz the user hasn't enabled it yet
                         req.session.method='plain';
                         newUser.save(function(err) {
                             if (err)
@@ -389,6 +370,7 @@ module.exports = function(passport) {
                 user.google.id    = profile.id;
                 user.google.token = token;
                 user.google.name  = profile.displayName;
+                user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
                 console.log("LOGGING GOOGLE USER "+profile.displayName);
                 req.session.method=(user.key)?'totp':'plain';
                 user.save(function(err) {
