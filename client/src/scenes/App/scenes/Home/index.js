@@ -3,7 +3,7 @@ import React from 'react'
 import ItemList from './components/ItemList/index'
 import PostItem from './components/PostItem/index'
 import LoadMoreItem from './components/LoadMoreItem/index'
-import EditBoxItem from './components/EditBoxItem/index'
+import EditBoxItem from './components/NewPostItem/index'
 
 const dummyMessages = [
   {
