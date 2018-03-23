@@ -14,10 +14,10 @@ const styles = {
   },
   editBoxItem: {
     display: 'block',
-    padding: '16px 24px 18px 24px'
+    padding: '24px 24px 14px 24px'
   },
   editBoxButtons: {
-    paddingTop: '12px',
+    paddingTop: '8px',
     textAlign: 'right'
   },
   editBoxSendButton: {
@@ -54,12 +54,12 @@ export default withStyles(styles)(class extends Component<Props, State> {
 
   editBoxItem = () => <ElevatedItem>
     <ListItem className={this.props.classes.editBoxItem}>
-      <TextField placeholder='Post something' multiline rows='3' rowsMax='0' value={this.state.post}
+      <TextField placeholder='Post something' multiline rowsMax='0' value={this.state.post}
         onChange={this.handlePostChange} className={this.props.classes.textField} margin='dense' fullWidth
         error={this.state.maxLengthReached}
         helperText={this.state.maxLengthReached ? 'Posts are limited to 255 characters' : null} />
       <div className={this.props.classes.editBoxButtons}>
-        <Button variant='raised' color='primary' aria-label='Post' onClick={this.onPost}>
+        <Button variant='flat' color='primary' aria-label='Post' onClick={this.onPost}>
           Post<SendIcon className={this.props.classes.editBoxSendButton} />
         </Button>
       </div>
